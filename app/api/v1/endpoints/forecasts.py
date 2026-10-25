@@ -16,6 +16,7 @@ from app.core.exceptions import EntityNotFoundException
 from app.core.security import require_roles, AuthenticatedUser, PLANNER_ROLES, VIEWER_ROLES
 from app.models.facility import Store
 from app.models.product import Product
+<<<<<<< HEAD
 from app.schemas.ai import (
     ForecastDecisionRequest,
     ForecastDecisionResponse,
@@ -23,6 +24,8 @@ from app.schemas.ai import (
     BatchForecastDecisionResponse,
 )
 from app.services.ollama_service import OllamaService
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 router = APIRouter(prefix="/forecasts", tags=["Demand Forecasting"])
 
@@ -111,6 +114,7 @@ def run_forecast(
     return response
 
 
+<<<<<<< HEAD
 @router.post(
     "/decision",
     response_model=ForecastDecisionResponse,
@@ -153,6 +157,8 @@ def batch_evaluate_forecast_decisions(
     )
 
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 @router.get(
     "/{forecast_id}",
     response_model=ForecastRunResponse,
@@ -166,4 +172,7 @@ def get_forecast(
     if forecast_id not in _FORECAST_REGISTRY:
         raise EntityNotFoundException("ForecastRun", forecast_id)
     return _FORECAST_REGISTRY[forecast_id]
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b

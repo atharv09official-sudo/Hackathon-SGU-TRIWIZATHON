@@ -1,4 +1,5 @@
 """
+<<<<<<< HEAD
 PRD-Compliant Acceptance Test Suite for FlowGrid Engine
 Implements Section 12 Success Metrics and Section 6 Functional Requirements:
 - FR-P0-01: Data Ingestion & Zero-Leakage Chronological Validation
@@ -412,6 +413,14 @@ class PRDTestSuite:
         print(f"Test report successfully saved to: {export_path}")
         return report
 
+=======
+FlowGrid: Acceptance Test Suite shim delegating to scripts/prd_test_suite.py.
+"""
+
+from scripts.prd_test_suite import PRDTestSuite, safe_json_default
+
+__all__ = ["PRDTestSuite", "safe_json_default"]
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 if __name__ == "__main__":
     suite = PRDTestSuite()

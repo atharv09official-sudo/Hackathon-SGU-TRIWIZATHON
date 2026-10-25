@@ -18,7 +18,11 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
+<<<<<<< HEAD
 import { X, Minus, Plus, Locate, Maximize, Loader2, Layers } from "lucide-react";
+=======
+import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react";
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 import { cn } from "@/lib/utils";
 
@@ -45,6 +49,7 @@ function loadMapLibre() {
 
 if (typeof window !== "undefined") loadMapLibre().catch(() => {});
 
+<<<<<<< HEAD
 type MapTypeId =
   | "satellite"
   | "hybrid"
@@ -211,6 +216,11 @@ const GOOGLE_MAPS_STYLES: Record<
 const defaultStyles = {
   dark: GOOGLE_MAPS_STYLES.satellite,
   light: GOOGLE_MAPS_STYLES.satellite,
+=======
+const defaultStyles = {
+  dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 };
 
 // A tile-less, dependency-free style with a transparent background. Use it for
@@ -325,8 +335,11 @@ type MapContextValue = {
   mapLib: MapLibreModule | null;
   isLoaded: boolean;
   resolvedTheme: Theme;
+<<<<<<< HEAD
   mapTypeId?: MapTypeId;
   setMapTypeId?: (type: MapTypeId) => void;
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 };
 
 const MapContext = createContext<MapContextValue | null>(null);
@@ -398,6 +411,7 @@ type MapProps = {
    * to enable controlled mode where the map viewport is driven by your state.
    */
   onViewportChange?: (viewport: MapViewport) => void;
+<<<<<<< HEAD
   /**
    * Google Maps type ID: "satellite" (default), "hybrid", or "roadmap" / "map".
    * Configures the visual style to real Google Maps satellite imagery or road map.
@@ -411,6 +425,8 @@ type MapProps = {
    * Callback fired when mapTypeId changes.
    */
   onMapTypeIdChange?: (mapTypeId: MapTypeId) => void;
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   /** Show a loading indicator on the map */
   loading?: boolean;
 } & Omit<MapLibreGL.MapOptions, "container" | "style">;
@@ -442,9 +458,12 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     children,
     className,
     theme: themeProp,
+<<<<<<< HEAD
     mapTypeId: controlledMapTypeId,
     defaultMapTypeId = "satellite",
     onMapTypeIdChange,
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     styles,
     blank = false,
     projection,
@@ -473,6 +492,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
 
   const stableStyles = useStableValue(styles);
 
+<<<<<<< HEAD
   const [internalMapTypeId, setInternalMapTypeId] = useState<MapTypeId>(
     controlledMapTypeId ?? defaultMapTypeId ?? "satellite",
   );
@@ -497,6 +517,11 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     }
     // Explicit styles win. Otherwise `blank` opts into the transparent
     // tile-less basemap; with neither, fall back to the Google Maps satellite defaults.
+=======
+  const mapStyles = useMemo(() => {
+    // Explicit styles win. Otherwise `blank` opts into the transparent
+    // tile-less basemap; with neither, fall back to the Carto defaults.
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     if (stableStyles) {
       return {
         dark: stableStyles.dark ?? defaultStyles.dark,
@@ -507,7 +532,11 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       return { dark: blankMapStyle, light: blankMapStyle };
     }
     return defaultStyles;
+<<<<<<< HEAD
   }, [activeMapTypeId, normalizedKey, stableStyles, blank]);
+=======
+  }, [stableStyles, blank]);
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
   const initOptionsRef = useRef({ props, viewport, resolvedTheme, mapStyles });
   initOptionsRef.current = { props, viewport, resolvedTheme, mapStyles };
@@ -515,6 +544,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
   // Expose the map instance to the parent component
   useImperativeHandle(ref, () => mapInstance as MapLibreGL.Map, [mapInstance]);
 
+<<<<<<< HEAD
   // Keep map responsive and correctly sized in its dashboard container
   useEffect(() => {
     if (!mapInstance || !containerRef.current) return;
@@ -525,6 +555,8 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     return () => observer.disconnect();
   }, [mapInstance]);
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   // Initialize the map once maplibre-gl has loaded
   useEffect(() => {
     let cancelled = false;
@@ -655,6 +687,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       mapLib,
       isLoaded: isLoaded && isStyleLoaded,
       resolvedTheme,
+<<<<<<< HEAD
       mapTypeId: activeMapTypeId,
       setMapTypeId: handleSetMapTypeId,
     }),
@@ -667,6 +700,10 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       activeMapTypeId,
       handleSetMapTypeId,
     ],
+=======
+    }),
+    [mapInstance, mapLib, isLoaded, isStyleLoaded, resolvedTheme],
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   );
 
   return (
@@ -1239,6 +1276,7 @@ function MapControls({
   );
 }
 
+<<<<<<< HEAD
 type MapTypeControlProps = {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
   className?: string;
@@ -1321,6 +1359,8 @@ function MapTypeControl({
   );
 }
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 function CompassButton({ onClick }: { onClick: () => void }) {
   const { map } = useMap();
   const compassRef = useRef<SVGSVGElement>(null);
@@ -1725,6 +1765,7 @@ function MapRoute({
   useEffect(() => {
     if (!isLoaded || !map) return;
 
+<<<<<<< HEAD
     try {
       if (map.getLayer(layerId)) map.removeLayer(layerId);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
@@ -1732,15 +1773,21 @@ function MapRoute({
       // ignore
     }
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     map.addSource(sourceId, {
       type: "geojson",
       data: {
         type: "Feature",
         properties: {},
+<<<<<<< HEAD
         geometry: {
           type: "LineString",
           coordinates: coordinates.length < 2 ? [] : coordinates,
         },
+=======
+        geometry: { type: "LineString", coordinates: [] },
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
       },
     });
 
@@ -3025,21 +3072,30 @@ export {
   MarkerLabel,
   MapPopup,
   MapControls,
+<<<<<<< HEAD
   MapTypeControl,
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   MapRoute,
   RouteProgress,
   RouteMarker,
   MapArc,
   MapGeoJSON,
   MapClusterLayer,
+<<<<<<< HEAD
   GOOGLE_MAPS_STYLES,
   google,
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 };
 
 export type {
   MapRef,
   MapViewport,
+<<<<<<< HEAD
   MapTypeId,
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   MapStyleOption,
   MapArcDatum,
   MapArcEvent,
@@ -3053,7 +3109,10 @@ export type {
   MarkerTooltipProps,
   MarkerLabelProps,
   MapControlsProps,
+<<<<<<< HEAD
   MapTypeControlProps,
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   MapPopupProps,
   MapRouteProps,
   RouteProgressProps,

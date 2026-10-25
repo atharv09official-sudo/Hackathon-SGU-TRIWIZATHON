@@ -1,0 +1,69 @@
+# ==============================================================================
+# AI Agent Context & Indexing Ignore (.agentignore)
+# Prevents AI indexing and context windows from choking on large datasets & binaries
+# ==============================================================================
+
+# Massive Data & Tabular Files (100MB+ datasets)
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.geojson
+*.jsonl
+
+# ML Models & Binary Weights
+*.pt
+*.pth
+*.onnx
+*.joblib
+*.pkl
+*.pickle
+*.bin
+*.weights
+
+# SQLite Databases & Storage
+*.db
+*.sqlite
+*.sqlite3
+flowgrid_dev.db
+
+# Build & Bundler Artifacts
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.cache/
+
+# Node & Package Managers
+node_modules/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+ENV/
+
+# Media & Fonts
+*.otf
+*.ttf
+*.woff
+*.woff2
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+*.mp4
+
+# Logs
+*.log
+logs/

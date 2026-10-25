@@ -26,6 +26,10 @@ export interface ProductAiAssistantProps {
   context?: ChatContext | null;
   onClearContext?: () => void;
   onNavigateTab?: (tab: string) => void;
+<<<<<<< HEAD
+=======
+  onClose?: () => void;
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   language?: 'en' | 'hi' | 'mr';
 }
 
@@ -44,6 +48,10 @@ export const ProductAiAssistant: React.FC<ProductAiAssistantProps> = ({
   context,
   onClearContext,
   onNavigateTab,
+<<<<<<< HEAD
+=======
+  onClose,
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   language = 'en',
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
@@ -125,6 +133,10 @@ export const ProductAiAssistant: React.FC<ProductAiAssistantProps> = ({
         text: response.answer,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         sources: response.sources,
+<<<<<<< HEAD
+=======
+        intent: response.intent,
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         suggestedFollowups: response.suggested_followups,
         isAiGenerated: response.is_ai_generated,
         missingInformation: response.missing_information,
@@ -211,6 +223,21 @@ export const ProductAiAssistant: React.FC<ProductAiAssistantProps> = ({
             <Trash2 className="w-3.5 h-3.5" />
             <span className="hidden md:inline">Clear</span>
           </button>
+<<<<<<< HEAD
+=======
+
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 text-[#64748B] hover:text-[#1E293B] hover:bg-[#F1F5F9] rounded-xl transition-all cursor-pointer"
+              title="Close assistant"
+              aria-label="Close assistant"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         </div>
       </div>
 
@@ -246,9 +273,15 @@ export const ProductAiAssistant: React.FC<ProductAiAssistantProps> = ({
                 {msg.text}
               </div>
 
+<<<<<<< HEAD
               {/* Verified Sources Attribution Accordion */}
               {msg.sources && msg.sources.length > 0 && (
                 <div className="mt-3 pt-2.5 border-t border-[#E7E5E4]">
+=======
+              {/* Verified Sources & Deep Navigation Shortcuts */}
+              {msg.sources && msg.sources.length > 0 && (
+                <div className="mt-3 pt-2.5 border-t border-[#E7E5E4] flex flex-wrap items-center justify-between gap-2">
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
                   <button
                     type="button"
                     onClick={() => setActiveSourcesModal(msg.sources || null)}
@@ -257,6 +290,54 @@ export const ProductAiAssistant: React.FC<ProductAiAssistantProps> = ({
                     <Database className="w-3.5 h-3.5" />
                     <span>{msg.sources.length} Verified Data Sources</span>
                   </button>
+<<<<<<< HEAD
+=======
+
+                  {onNavigateTab && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {(msg.intent === 'expiry_risk' || msg.text.toLowerCase().includes('fefo') || msg.text.toLowerCase().includes('expiry')) && (
+                        <button
+                          type="button"
+                          onClick={() => onNavigateTab('warehouse')}
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-lg transition-colors cursor-pointer"
+                        >
+                          <span>Open Warehouse Dock</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
+                      {(msg.intent === 'stock_availability' || msg.intent === 'out_of_stock') && (
+                        <button
+                          type="button"
+                          onClick={() => onNavigateTab('plans')}
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-300 px-2 py-0.5 rounded-lg transition-colors cursor-pointer"
+                        >
+                          <span>View Plan Matrix</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
+                      {msg.intent === 'freight_cost' && (
+                        <button
+                          type="button"
+                          onClick={() => onNavigateTab('dispatch')}
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-300 px-2 py-0.5 rounded-lg transition-colors cursor-pointer"
+                        >
+                          <span>Track Dispatch</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
+                      {msg.intent === 'demand_forecast' && (
+                        <button
+                          type="button"
+                          onClick={() => onNavigateTab('forecast')}
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-300 px-2 py-0.5 rounded-lg transition-colors cursor-pointer"
+                        >
+                          <span>Inspect Forecasts</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      )}
+                    </div>
+                  )}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
                 </div>
               )}
 

@@ -12,10 +12,13 @@ from app.schemas.ai import (
     DisruptionParseResponse,
     OllamaModelInfo,
     OllamaStatusResponse,
+<<<<<<< HEAD
     ForecastDecisionRequest,
     ForecastDecisionResponse,
     DocumentAuditRequest,
     DocumentAuditResponse,
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 )
 from app.schemas.decision import CandidatePlanProposal, ProposedMovement
 
@@ -412,6 +415,7 @@ class OllamaService:
             confidence_score=0.94 if not res.is_fallback else 0.88,
             proposed_movements=proposed_movements,
         )
+<<<<<<< HEAD
 
     @classmethod
     def audit_and_decide_forecast(
@@ -849,3 +853,5 @@ class OllamaService:
         )
 
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b

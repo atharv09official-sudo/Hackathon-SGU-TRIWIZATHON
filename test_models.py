@@ -1,4 +1,5 @@
 """
+<<<<<<< HEAD
 Comprehensive Automated Test Suite for FlowGrid ML & Optimization Models
 Guarantees ZERO Faulty Outputs:
 - No NaN, null, or infinite values
@@ -488,3 +489,21 @@ if __name__ == "__main__":
 
 
 
+=======
+FlowGrid: Automated Test Suite shim delegating to tests/test_models.py.
+"""
+
+import sys
+import unittest
+from pathlib import Path
+
+# Add project root to sys.path
+ROOT_DIR = Path(__file__).resolve().parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from tests.test_models import TestFlowGridModels
+
+if __name__ == "__main__":
+    unittest.main()
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b

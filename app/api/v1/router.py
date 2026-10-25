@@ -13,18 +13,27 @@ from app.api.v1.endpoints import (
     forecasts,
     ai,
     agents,
+<<<<<<< HEAD
     messages,
     chat,
     imports,
+=======
+    notifications,
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 )
 
 api_router = APIRouter()
 
 # Core Domain Endpoints
+<<<<<<< HEAD
 api_router.include_router(auth.router)
 api_router.include_router(messages.router)
 api_router.include_router(chat.router)
 api_router.include_router(imports.router)
+=======
+api_router.include_router(notifications.router)
+api_router.include_router(auth.router)
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 api_router.include_router(plans.router)
 api_router.include_router(plans.allocation_router)
 api_router.include_router(plans.comparison_router)

@@ -7,6 +7,7 @@ import { PlanGeneratorView } from './components/PlanGeneratorView';
 import { ForecastReviewView } from './components/ForecastReviewView';
 import { BaselineComparisonView } from './components/BaselineComparisonView';
 import { WarehouseOpsView } from './components/WarehouseOpsView';
+<<<<<<< HEAD
 import { StoreManagementView } from './components/KiranaRetailerView';
 import { ImportStudioView } from './components/ImportStudioView';
 import { AdminHealthView } from './components/AdminHealthView';
@@ -19,6 +20,17 @@ import { HetvayaAgenticChatbot } from './components/HetvayaAgenticChatbot';
 import { Sun, Moon } from 'lucide-react';
 import { useTranslation } from './context/TranslationContext';
 
+=======
+import { KiranaRetailerView } from './components/KiranaRetailerView';
+import { ImportStudioView } from './components/ImportStudioView';
+import { AdminHealthView } from './components/AdminHealthView';
+import { SmartDispatchView } from './components/SmartDispatchView';
+import { MapSection } from './components/map-section/MapSection';
+import { NotificationsView } from './components/NotificationsView';
+import { DemoWalkthroughModal } from './components/DemoWalkthroughModal';
+import { WhatIfSimulatorModal } from './components/WhatIfSimulatorModal';
+import { UserCheck, ShieldCheck, Sparkles, CheckCircle2, ChevronRight, Lock, Store, Warehouse as WarehouseIcon, Cpu, Sliders } from 'lucide-react';
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 import {
   INITIAL_PRODUCTS,
@@ -53,22 +65,53 @@ import {
   processEventQueue
 } from './services/offlineSyncService';
 import { FlowGridAPI, BackendHealthStatus, setActiveUserRole } from './services/api';
+<<<<<<< HEAD
+=======
+import { PLAN_HORIZON_DAYS } from './data/demoScope';
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('plans');
   const [userRole, setUserRole] = useState<UserRole>('rohit');
+<<<<<<< HEAD
   const [isOnline, setIsOnline] = useState<boolean>(true);
   const [backendStatus, setBackendStatus] = useState<BackendHealthStatus | null>(null);
   const [theme, setTheme] = useState<ThemeMode>('day');
   const [unreadCriticalCount, setUnreadCriticalCount] = useState<number>(0);
 
   const handleToggleTheme = () => setTheme(prev => prev === 'night' ? 'day' : 'night');
+=======
+  const [roleNotice, setRoleNotice] = useState<string | null>(null);
+  const [isOnline, setIsOnline] = useState<boolean>(true);
+  const [backendStatus, setBackendStatus] = useState<BackendHealthStatus | null>(null);
+  const theme: ThemeMode = 'day';
+
+  const handleRoleChange = (newRole: UserRole) => {
+    setUserRole(newRole);
+    setActiveUserRole(newRole);
+    if (newRole === 'rohit') {
+      setActiveTab('plans');
+      setRoleNotice('Switched to Rohit Deshpande');
+    } else if (newRole === 'sunita') {
+      setActiveTab('warehouse');
+      setRoleNotice('Switched to Sunita Deshmukh');
+    } else if (newRole === 'ganesh') {
+      setActiveTab('retailer');
+      setRoleNotice('Switched to Ganesh Patil');
+    } else if (newRole === 'priya') {
+      setActiveTab('health');
+      setRoleNotice('Switched to Priya Sharma');
+    }
+    setTimeout(() => setRoleNotice(null), 4500);
+  };
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
   // Sync active user persona with API client
   useEffect(() => {
     setActiveUserRole(userRole);
   }, [userRole]);
 
+<<<<<<< HEAD
   // Sync unread critical messages badge count
   useEffect(() => {
     let isMounted = true;
@@ -85,6 +128,8 @@ export const App: React.FC = () => {
     fetchUnread();
   }, [userRole, activeTab]);
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   // Core Data State
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [warehouses, setWarehouses] = useState<Warehouse[]>(INITIAL_WAREHOUSES);
@@ -130,10 +175,16 @@ export const App: React.FC = () => {
   const [planRun, setPlanRun] = useState<PlanRun | null>(null);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
+<<<<<<< HEAD
   // Modals & Copilot
   const [isDemoModalOpen, setIsDemoModalOpen] = useState<boolean>(false);
   const [isWhatIfModalOpen, setIsWhatIfModalOpen] = useState<boolean>(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState<boolean>(false);
+=======
+  // Modals
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState<boolean>(false);
+  const [isWhatIfModalOpen, setIsWhatIfModalOpen] = useState<boolean>(false);
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
   // Initial backend health probe & data load
   useEffect(() => {
@@ -146,11 +197,16 @@ export const App: React.FC = () => {
 
       if (health.isOnline) {
         try {
+<<<<<<< HEAD
           const [p, w, r, b, f] = await Promise.all([
+=======
+          const [p, w, r, b] = await Promise.all([
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             FlowGridAPI.getProducts(),
             FlowGridAPI.getWarehouses(),
             FlowGridAPI.getRetailers(),
             FlowGridAPI.getBatches(),
+<<<<<<< HEAD
             FlowGridAPI.getForecasts(),
           ]);
           if (!isMounted) return;
@@ -173,6 +229,14 @@ export const App: React.FC = () => {
           if (f.length > 0) {
             setForecasts(f);
           }
+=======
+          ]);
+          if (!isMounted) return;
+          if (p.length > 0) setProducts(p);
+          if (w.length > 0) setWarehouses(w);
+          if (r.length > 0) setRetailers(r);
+          if (b.length > 0) setBatches(b);
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         } catch (e) {
           console.warn('Real backend catalog fetch notice:', e);
         }
@@ -233,11 +297,28 @@ export const App: React.FC = () => {
           const match = rec.product.match(/(SKU-\d+)/);
           const sku = match ? match[1] : `SKU-${String(idx + 1).padStart(3, '0')}`;
 
+<<<<<<< HEAD
           const reasonCard: ReasonCard = {
             summary: rec.reason,
             skuName: rec.product,
             retailerName: rec.to_store,
             sourceWarehouseName: rec.from_warehouse,
+=======
+          const rawWh = (rec.from_warehouse || '').toUpperCase();
+          const isPune = rawWh === 'WH-01' || rawWh === 'WH-PUN' || rawWh.includes('PUNE');
+          const isSatara = rawWh === 'WH-02' || rawWh === 'WH-SAT' || rawWh.includes('SATARA');
+          const warehouseId = isPune ? 'WH-PUN' : isSatara ? 'WH-SAT' : 'WH-KOL';
+
+          const rawStore = (rec.to_store || '').toUpperCase();
+          const isGanesh = rawStore === 'STORE-001' || rawStore === 'RET-GAN' || rawStore.includes('GAN') || rawStore.includes('KOL');
+          const retailerId = isGanesh ? 'RET-GAN' : rawStore;
+
+          const reasonCard: ReasonCard = {
+            summary: rec.reason,
+            skuName: rec.product,
+            retailerName: isGanesh ? 'Ganesh Kirana & General Store (Kolhapur)' : rec.to_store,
+            sourceWarehouseName: isPune ? 'Pune Central Logistics Hub (W-PUN)' : isSatara ? 'Satara Regional Depot' : 'Kolhapur Distribution Center',
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             demandMedian: rec.quantity,
             demandP95: Math.round(rec.quantity * 1.35),
             effectiveStockBefore: 8,
@@ -256,10 +337,17 @@ export const App: React.FC = () => {
           return {
             id: `LINE-${String(idx + 1).padStart(3, '0')}`,
             planRunId: result.plan_code || `PLAN-AI-${Date.now().toString().slice(-6)}`,
+<<<<<<< HEAD
             warehouseId: rec.from_warehouse,
             retailerId: rec.to_store,
             sku,
             batchNo: `LOT-${rec.from_warehouse}-${idx + 1}`,
+=======
+            warehouseId,
+            retailerId,
+            sku,
+            batchNo: `LOT-${warehouseId}-${idx + 1}`,
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             cases,
             units: rec.quantity,
             freightRupees: freight,
@@ -481,7 +569,11 @@ export const App: React.FC = () => {
     setQueuedEvents(getStoredEventQueue());
   };
 
+<<<<<<< HEAD
   // Handler: Store Management Sale Entry (FR-04 single sales path)
+=======
+  // Handler: Kirana Sale Entry (FR-04 single sales path)
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   const handleRecordSale = (sku: string, unitsSold: number) => {
     enqueueEvent(
       'SALE',
@@ -491,7 +583,11 @@ export const App: React.FC = () => {
     setQueuedEvents(getStoredEventQueue());
   };
 
+<<<<<<< HEAD
   // Handler: Store Management Stock Count
+=======
+  // Handler: Kirana Stock Count
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   const handleRecordStockCount = (sku: string, closingUnits: number) => {
     enqueueEvent(
       'STOCK_COUNT',
@@ -501,7 +597,11 @@ export const App: React.FC = () => {
     setQueuedEvents(getStoredEventQueue());
   };
 
+<<<<<<< HEAD
   // Handler: Store Management Receipt Confirmation
+=======
+  // Handler: Kirana Receipt Confirmation
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   const handleRecordReceipt = (
     shipmentId: string,
     acceptedCases: number,
@@ -538,18 +638,27 @@ export const App: React.FC = () => {
     setQueuedEvents(result.processedEvents.filter(e => e.status === 'QUEUED'));
   };
 
+<<<<<<< HEAD
   const currentStore = retailers.find(r => r.id === 'RET-GAN') || retailers[0];
   const { t } = useTranslation();
 
   return (
     <div className={`min-h-screen flex flex-col lg:flex-row transition-colors duration-200 ${
       theme === 'night' ? 'theme-night bg-slate-950 text-slate-100' : 'theme-day bg-[#FFF8E7] text-[#1E293B]'
+=======
+  const currentKirana = retailers.find(r => r.id === 'RET-GAN') || retailers[0];
+
+  return (
+    <div className={`min-h-screen flex flex-col lg:flex-row transition-colors duration-200 ${
+      theme === 'day' ? 'theme-day bg-[#fbf4e5] text-[#0a192f]' : 'theme-night bg-slate-950 text-slate-100'
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     }`}>
       {/* Left Sidebar Navigation */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         userRole={userRole}
+<<<<<<< HEAD
         setUserRole={setUserRole}
         isOnline={isOnline}
         setIsOnline={setIsOnline}
@@ -561,10 +670,20 @@ export const App: React.FC = () => {
         onOpenChatbot={() => setIsChatbotOpen(true)}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+=======
+        setUserRole={handleRoleChange}
+        isOnline={isOnline}
+        setIsOnline={setIsOnline}
+        queuedEventCount={queuedEvents.filter(e => e.status === 'QUEUED').length}
+        onOpenDemoModal={() => setIsDemoModalOpen(true)}
+        onOpenWhatIfModal={() => setIsWhatIfModalOpen(true)}
+        onTriggerSync={handleTriggerSync}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
       />
 
       {/* Main Content Column */}
       <div className="flex-1 min-w-0 flex flex-col min-h-screen overflow-x-hidden">
+<<<<<<< HEAD
         {/* Top Context Sub-Bar (Desktop) */}
         <div className={`hidden lg:flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-6 py-2.5 border-b text-xs transition-colors duration-200 ${
           theme === 'night'
@@ -624,6 +743,48 @@ export const App: React.FC = () => {
         </div>
 
         {/* Main Content Area */}
+=======
+        {/* Role Switch Floating Toast */}
+        {roleNotice && (
+          <div className="fixed top-5 right-5 z-50 animate-in fade-in slide-in-from-top-3 duration-200 p-4 rounded-2xl bg-white text-[#0a192f] border border-indigo-200 shadow-xl flex items-center gap-3">
+            <Sparkles className="w-5 h-5 text-indigo-500 shrink-0 animate-pulse" />
+            <span className="text-xs font-semibold">{roleNotice}</span>
+          </div>
+        )}
+
+        {/* Top Context Sub-Bar (Desktop) with Persona Scope Ribbon */}
+        <div className={`hidden lg:flex flex-col border-b text-xs transition-colors duration-200 ${
+          theme === 'day'
+            ? 'bg-white/95 border-slate-200/90 text-slate-700 shadow-sm'
+            : 'bg-slate-900/60 border-slate-800/80 text-slate-300'
+        }`}>
+          {/* Top Info Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 px-6 py-2 border-b border-slate-100 dark:border-slate-800/60">
+            <div className="context-title flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span className={`font-bold capitalize ${theme === 'day' ? 'text-[#0a192f]' : 'text-white'}`}>
+                {activeTab === 'plans' ? 'Allocation plan' :
+                 activeTab === 'forecast' ? 'Demand forecast' :
+                 activeTab === 'map' ? 'Demand map' :
+                 activeTab === 'benchmark' ? 'Impact benchmark' :
+                 activeTab === 'dispatch' ? 'Delivery dispatch' :
+                 activeTab === 'warehouse' ? 'Warehouse operations' :
+                 activeTab === 'retailer' ? 'Kirana POS' :
+                 activeTab === 'import' ? 'Data import' :
+                 activeTab === 'notifications' ? 'SMS & alerts hub' :
+                 'System health'}
+              </span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-500">{PLAN_HORIZON_DAYS}-day planning horizon</span>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+                {/* Main Content Area */}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
           {/* View Switcher based on Active Tab */}
           {activeTab === 'plans' && (
@@ -638,15 +799,26 @@ export const App: React.FC = () => {
               products={products}
               warehouses={warehouses}
               retailers={retailers}
+<<<<<<< HEAD
               batches={batches}
               isGenerating={isGenerating}
+=======
+              isGenerating={isGenerating}
+              userRole={userRole}
+              theme={theme}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             />
           )}
 
           {activeTab === 'dispatch' && (
             <SmartDispatchView
               theme={theme}
+<<<<<<< HEAD
               onToggleTheme={handleToggleTheme}
+=======
+              userRole={userRole}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             />
           )}
 
@@ -655,10 +827,19 @@ export const App: React.FC = () => {
               forecasts={forecasts}
               products={products}
               retailers={retailers}
+<<<<<<< HEAD
             />
           )}
 
           {activeTab === 'map' && <MapSection />}
+=======
+              userRole={userRole}
+              theme={theme}
+            />
+          )}
+
+          {activeTab === 'map' && <MapSection theme={theme} />}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
           {activeTab === 'benchmark' && (
             <BaselineComparisonView />
@@ -674,12 +855,22 @@ export const App: React.FC = () => {
               onDispatchLine={handleDispatchLine}
               onUpdateBatchCount={handleUpdateBatchCount}
               isOnline={isOnline}
+<<<<<<< HEAD
+=======
+              userRole={userRole}
+              theme={theme}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             />
           )}
 
           {activeTab === 'retailer' && (
+<<<<<<< HEAD
             <StoreManagementView
               currentRetailer={currentStore}
+=======
+            <KiranaRetailerView
+              currentRetailer={currentKirana}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
               products={products}
               inTransitShipments={inTransitShipments}
               onRecordSale={handleRecordSale}
@@ -688,10 +879,16 @@ export const App: React.FC = () => {
               queuedEvents={queuedEvents}
               isOnline={isOnline}
               onTriggerSync={handleTriggerSync}
+<<<<<<< HEAD
+=======
+              userRole={userRole}
+              theme={theme}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             />
           )}
 
           {activeTab === 'import' && (
+<<<<<<< HEAD
             <ImportStudioView
               batches={batches}
               products={products}
@@ -739,11 +936,30 @@ export const App: React.FC = () => {
               setUserRole={setUserRole}
               theme={theme}
               onNavigateTab={setActiveTab}
+=======
+            <ImportStudioView />
+          )}
+
+          {activeTab === 'health' && (
+            <AdminHealthView
+              queuedEventCount={queuedEvents.filter(e => e.status === 'QUEUED').length}
+              userRole={userRole}
+              isOnline={isOnline}
+              theme={theme}
+            />
+          )}
+
+          {activeTab === 'notifications' && (
+            <NotificationsView
+              userRole={userRole}
+              theme={theme}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             />
           )}
         </main>
 
         {/* Footer */}
+<<<<<<< HEAD
         <footer className="border-t border-[#E7E5E4] bg-white py-5 text-xs text-[#64748B] mt-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="font-medium text-[#1E293B]">
@@ -753,6 +969,15 @@ export const App: React.FC = () => {
               Greedy Marginal Allocation • Scikit-learn Quantile ML • React 19 • Offline Resilient Event Queue
             </p>
             <a href="/" className="text-[#2563EB] hover:text-[#1E293B] font-semibold transition-colors">
+=======
+        <footer className="border-t border-slate-900 bg-slate-950/80 py-5 text-xs text-slate-500 mt-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>
+              HETVAYA · Distribution Planning
+            </p>
+
+            <a href="/" className="text-indigo-300 hover:text-white transition-colors">
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
               Landing page
             </a>
           </div>
@@ -777,6 +1002,7 @@ export const App: React.FC = () => {
         baseFreight={planRun?.totalFreightRupees || 1420}
         baseMargin={planRun?.expectedMarginRupees || 49958}
       />
+<<<<<<< HEAD
 
       {/* HETVAYA Agentic Copilot (nemotron-3-ultra:cloud) with Continuous Live State */}
       <HetvayaAgenticChatbot
@@ -792,6 +1018,8 @@ export const App: React.FC = () => {
         isOpen={isChatbotOpen}
         onClose={() => setIsChatbotOpen(false)}
       />
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     </div>
   );
 };

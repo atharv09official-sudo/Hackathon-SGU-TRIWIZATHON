@@ -4,6 +4,7 @@
   "training_samples": 2000,
   "validation_samples": 500,
   "initial_parameter_stats": {
+<<<<<<< HEAD
     "wh_emb.weight_norm": 0.3879,
     "dest_emb.weight_norm": 1.1194,
     "corridor_emb.weight_norm": 0.4193,
@@ -50,12 +51,61 @@
     "out_linear.bias_norm": 0.158,
     "total_weight_norm": 26.8756,
     "total_bias_norm": 1.2888
+=======
+    "wh_emb.weight_norm": 0.4548,
+    "dest_emb.weight_norm": 1.1176,
+    "corridor_emb.weight_norm": 0.4294,
+    "terrain_emb.weight_norm": 0.3499,
+    "category_emb.weight_norm": 0.6069,
+    "weekday_emb.weight_norm": 0.2385,
+    "linear1.weight_norm": 16.0905,
+    "linear1.bias_norm": 0.5657,
+    "ln1.bias_norm": 0.0,
+    "res_linear.weight_norm": 15.9017,
+    "res_linear.bias_norm": 0.5657,
+    "res_ln.bias_norm": 0.0,
+    "linear2.weight_norm": 11.2597,
+    "linear2.bias_norm": 0.4,
+    "ln2.bias_norm": 0.0,
+    "linear3.weight_norm": 8.015,
+    "linear3.bias_norm": 0.2828,
+    "ln3.bias_norm": 0.0,
+    "out_linear.weight_norm": 1.4711,
+    "out_linear.bias_norm": 0.05,
+    "total_weight_norm": 26.5921,
+    "total_bias_norm": 0.9394
+  },
+  "final_parameter_stats": {
+    "wh_emb.weight_norm": 0.4659,
+    "dest_emb.weight_norm": 1.151,
+    "corridor_emb.weight_norm": 0.4517,
+    "terrain_emb.weight_norm": 0.3722,
+    "category_emb.weight_norm": 0.615,
+    "weekday_emb.weight_norm": 0.2564,
+    "linear1.weight_norm": 16.159,
+    "linear1.bias_norm": 0.6413,
+    "ln1.bias_norm": 0.3108,
+    "res_linear.weight_norm": 16.0935,
+    "res_linear.bias_norm": 0.6124,
+    "res_ln.bias_norm": 0.3424,
+    "linear2.weight_norm": 11.5396,
+    "linear2.bias_norm": 0.4468,
+    "ln2.bias_norm": 0.3099,
+    "linear3.weight_norm": 7.9983,
+    "linear3.bias_norm": 0.3441,
+    "ln3.bias_norm": 0.5664,
+    "out_linear.weight_norm": 1.8802,
+    "out_linear.bias_norm": 0.1594,
+    "total_weight_norm": 26.8908,
+    "total_bias_norm": 1.3268
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   },
   "loop_results": [
     {
       "cycle": 1,
       "name": "Global Manifold Alignment",
       "learning_rate": 0.0012,
+<<<<<<< HEAD
       "final_train_loss": 131.8601,
       "val_mae_units": 129.16,
       "val_wape_percent": 95.25,
@@ -66,11 +116,24 @@
       "linear1_weight_norm": 16.2184,
       "linear1_bias_norm": 0.5932,
       "out_linear_bias": 0.1262
+=======
+      "final_train_loss": 130.6011,
+      "val_mae_units": 128.83,
+      "val_wape_percent": 95.01,
+      "weight_norm": 26.7831,
+      "delta_weight_norm": 0.191,
+      "bias_norm": 1.1649,
+      "delta_bias_norm": 0.2255,
+      "linear1_weight_norm": 16.1395,
+      "linear1_bias_norm": 0.617,
+      "out_linear_bias": 0.1276
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     },
     {
       "cycle": 2,
       "name": "Hard-Sample Mining & Ghat Residual Backprop",
       "learning_rate": 0.0004,
+<<<<<<< HEAD
       "final_train_loss": 130.3174,
       "val_mae_units": 128.4,
       "val_wape_percent": 94.69,
@@ -81,11 +144,24 @@
       "linear1_weight_norm": 16.2382,
       "linear1_bias_norm": 0.6168,
       "out_linear_bias": 0.1516
+=======
+      "final_train_loss": 129.7974,
+      "val_mae_units": 128.05,
+      "val_wape_percent": 94.43,
+      "weight_norm": 26.8668,
+      "delta_weight_norm": 0.0837,
+      "bias_norm": 1.2923,
+      "delta_bias_norm": 0.1274,
+      "linear1_weight_norm": 16.1559,
+      "linear1_bias_norm": 0.6373,
+      "out_linear_bias": 0.153
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     },
     {
       "cycle": 3,
       "name": "Bias Calibration & Regularization",
       "learning_rate": 0.0001,
+<<<<<<< HEAD
       "final_train_loss": 129.4941,
       "val_mae_units": 128.21,
       "val_wape_percent": 94.55,
@@ -101,4 +177,21 @@
   "best_val_wape_percent": 94.55,
   "total_weight_delta": 0.2544,
   "total_bias_delta": 0.3494
+=======
+      "final_train_loss": 128.94,
+      "val_mae_units": 127.86,
+      "val_wape_percent": 94.29,
+      "weight_norm": 26.8908,
+      "delta_weight_norm": 0.024,
+      "bias_norm": 1.3268,
+      "delta_bias_norm": 0.0345,
+      "linear1_weight_norm": 16.159,
+      "linear1_bias_norm": 0.6413,
+      "out_linear_bias": 0.1594
+    }
+  ],
+  "best_val_wape_percent": 94.29,
+  "total_weight_delta": 0.2987,
+  "total_bias_delta": 0.3874
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 }

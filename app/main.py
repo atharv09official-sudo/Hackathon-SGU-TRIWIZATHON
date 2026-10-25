@@ -1,5 +1,9 @@
 from contextlib import asynccontextmanager
+<<<<<<< HEAD
 from fastapi import FastAPI, Depends
+=======
+from fastapi import FastAPI
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.logging import setup_logging, logger
@@ -54,7 +58,11 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
     description=(
+<<<<<<< HEAD
         "HETVAYA: AI-powered distribution intelligence, inventory optimization, and product assistant. "
+=======
+        "FlowGrid: AI-powered distribution intelligence and inventory optimization system. "
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         "Enforces the backend as the single authority for inventory allocation and commitment."
     ),
     lifespan=lifespan,
@@ -76,7 +84,10 @@ app.add_middleware(
 
 # Include API Routers
 from app.api.v1.router import api_router
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 app.include_router(api_router, prefix=settings.API_V1_STR)
 app.include_router(api_router, include_in_schema=False)  # Direct route aliases without /api/v1 prefix
 
@@ -89,4 +100,7 @@ def root():
         "docs_url": "/docs",
         "authoritative_rule": "Backend is the single authority for plan commitment",
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b

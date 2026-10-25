@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 # HETVAYA: AI-Powered Distribution Intelligence & Inventory Optimization Engine
 
 **SGU-TRIWIZATHON — Problem Statement 2: Distribution Intelligence & Inventory Optimization**
 
 **HETVAYA** is an enterprise-grade AI decision-support and dispatch-optimization platform for FMCG distribution networks. It solves the classic retail challenge where some stores have excess inventory while others face catastrophic stockouts. HETVAYA intelligently decides:
+=======
+# FlowGrid: AI-Powered Distribution Intelligence & Inventory Optimization Engine
+
+**SGU-TRIWIZATHON — Problem Statement 2: Distribution Intelligence & Inventory Optimization**
+
+FlowGrid is an enterprise-grade AI decision-support and dispatch-optimization platform for FMCG distribution networks. It solves the classic retail challenge where some stores have excess inventory while others face catastrophic stockouts. FlowGrid intelligently decides:
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 - **What products should be sent**
 - **How much quantity should be sent**
 - **Where they should be sent**
@@ -10,7 +18,10 @@
 
 The system minimizes lost sales and stockouts, cuts transportation costs, and eliminates product expiry wastage.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 ---
 
 ## 1. The Four Core Problem Concepts
@@ -99,11 +110,14 @@ FlowGrid features a native local Ollama LLM integration (`models/ollama_intellig
 - **Dynamic Dispatch Prioritization**: Tags dispatch instructions into operational tiers (`P0_IMMEDIATE` < 2 days supply, `P1_HIGH` < 4 days, `P2_ROUTINE`).
 - **High-Reliability Deterministic Fallback**: Connects to local Ollama (`http://localhost:11434`), and automatically falls back to an internal analytical engine within 1.2s if Ollama is offline or times out, guaranteeing 100% operational reliability and zero pipeline crashes.
 
+<<<<<<< HEAD
 ### Module 6: Enterprise Light UI & Multilingual Translation Engine
 - **Warm Cream & White Theme**: Enterprise-grade light UI palette (White `#FFFFFF` cards, Warm Cream `#FFF8E7` page background, Light Cream `#FAF3E0` headers, Dark Navy `#1E293B` text, Blue `#2563EB` navigation, Red `#DC2626` primary actions, and Success Green `#15803D`).
 - **Multilingual Support (EN / HI / MR)**: Complete multilingual translation across English, Hindi (`हिंदी`), and Marathi (`मराठी`) with locale-aware currency (`₹`) and number formatting, synchronized across desktop, mobile, and Store Management POS views with persistent `localStorage` preference.
 - **Google Maps Satellite Mode**: Real satellite imagery with interactive distribution corridor routes, warehouse hubs, and retail demand markers.
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 ---
 
 ## 3. Machine Learning & Optimization Architecture
@@ -190,7 +204,11 @@ Directly implements PRD Section 6 Functional Requirements and Section 12 Success
 | **FR-P0-11** | PRD Sec. 6.1 & 11 | Complete audit traceability & solver wall time $\le 10\text{s}$ | Solver latency 0.29s $\le 10\text{s}$ | **PASS** |
 
 **Final Score:** **6/6 Tests Passed (100.0% Compliance)**.
+<<<<<<< HEAD
 **Unit Tests:** **15/15 Tests Passed** in `test_models.py`.
+=======
+**Unit Tests:** **15/15 Tests Passed** in [`tests/test_models.py`](tests/test_models.py).
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 ---
 
@@ -367,6 +385,7 @@ Developed for the **SGU Triwizathon Hackathon (Problem Statement 2: FMCG Distrib
 
 Distributed under the [MIT License](LICENSE).
 
+<<<<<<< HEAD
 ---
 
 # 🚀 Running the Complete HETVAYA Application
@@ -402,6 +421,39 @@ python3 -m pytest tests/ -v
 # Frontend build & type check
 npm run build
 npm run lint
+=======
+
+---
+
+# 🚀 FlowGrid Authoritative Backend & Autonomous Delivery System
+
+The authoritative backend is built with **FastAPI**, **SQLAlchemy 2.0**, and **Alembic**, providing the authoritative persistence layer for inventory, reservations, plan lifecycle state transitions, audit trails, and autonomous agents.
+
+## Backend Architecture & Stack
+- **Framework**: FastAPI (Python 3.11+)
+- **Authoritative Persistence**: PostgreSQL / SQLite (`flowgrid_dev.db`) via SQLAlchemy 2.0 & Alembic migrations
+- **Local Ollama LLM Intelligence**: Model `llama3.2:latest` (or `gemma4:12b`) for dynamic fact-grounded plan explainability (`/api/v1/ai/explain-plan`) and disruption parsing (`/api/v1/ai/parse-disruption`)
+- **Autonomous Delivery Agents**: Delivery agent registry, real-time GPS heartbeat tracking, and automatic proximity reassignment (`/api/v1/agents`)
+
+## Running the Backend
+```bash
+# 1. Install Python dependencies
+pip install -r requirements.txt
+
+# 2. Run database migrations
+alembic upgrade head
+
+# 3. Start the FastAPI server
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+Interactive API documentation will be available at:
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+## Running Backend Automated Tests
+```bash
+pytest -v
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 ```
 
 ---
@@ -410,6 +462,7 @@ npm run lint
 
 | Subsystem | Primary Path | Tech Stack / Components | Role |
 | :--- | :--- | :--- | :--- |
+<<<<<<< HEAD
 | **Frontend UI** | [`src/`](src/) | React 19, TypeScript, Tailwind CSS v4, Recharts | Planner console, Store Management POS, Google Maps Satellite, What-If Simulator |
 | **Decision & ML Engine** | [`models/`](models/) | PyTorch, Scikit-learn, Joblib | Neural demand forecaster, anomaly detector & stock optimizer |
 | **Authoritative Backend** | [`app/`](app/) | FastAPI, SQLAlchemy 2.0, Pydantic | Inventory store, reservation authority & plan commitment lifecycle |
@@ -419,4 +472,16 @@ npm run lint
 | **Dataset & Benchmarks** | [`FlowGrid_Maharashtra_Dataset/`](FlowGrid_Maharashtra_Dataset/) | CSV, GeoJSON, OSRM scripts | Maharashtra FMCG demand, weather, roads & depot simulation data |
 | **Test Suite** | [`tests/`](tests/) | Pytest (100 test cases) | Backend decision guard, RBAC, inventory, and optimization suites |
 
+=======
+| **Frontend UI** | [`src/`](src/) | React 19, TypeScript, Tailwind CSS v4, Recharts | Planner console, Kirana POS, depot picker & benchmark visuals |
+| **Authoritative Backend** | [`app/`](app/) | FastAPI, SQLAlchemy 2.0, Pydantic | Inventory store, reservation authority & plan commitment lifecycle |
+| **Decision & ML Engine** | [`models/`](models/) | PyTorch, Scikit-learn, Joblib, OR-Tools | Neural demand forecaster, anomaly detector & stock optimizer |
+| **Database Migrations** | [`alembic/`](alembic/) | Alembic, PostgreSQL / SQLite | Authoritative schema evolution and constraint enforcement |
+| **Automated Test Suite** | [`tests/`](tests/) | Pytest (100+ test cases) | Backend decision guard, RBAC, inventory, and model unit test suites |
+| **Operational Scripts** | [`scripts/`](scripts/) | Python, TypeScript (tsx) | Pipeline runner, PRD acceptance suite & live system integration test |
+| **Documentation & PRDs** | [`docs/`](docs/) | Markdown, Architecture Specs | FlowGrid PRD v2.0, Hetvaya PRD v1.5 & system design guides |
+| **Operational FMCG Data** | [`flowgrid_flipkart_100sku/`](flowgrid_flipkart_100sku/) | 100 Flipkart SKUs, Inventory, Batches | Active production-grade FMCG distribution dataset & model splits |
+| **Geospatial & Roadway Data**| [`FlowGrid_Maharashtra_Dataset/`](FlowGrid_Maharashtra_Dataset/) | CSV, GeoJSON, OSRM scripts | Maharashtra FMCG demand, weather, roads & depot simulation data |
+| **Model Weights & Reports** | [`saved_models/`](saved_models/) | PyTorch (.pt), Joblib, JSON reports | Pre-trained neural weights, anomaly detectors & forecast quality metrics |
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 

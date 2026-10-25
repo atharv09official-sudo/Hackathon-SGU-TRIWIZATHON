@@ -20,7 +20,11 @@ export const INITIAL_NATIVE_DRIVERS: NativeDriver[] = [
     completedTrips: 3420,
     specialties: [
       'Bhavani Mandap Narrow Alleys (<2.5m)',
+<<<<<<< HEAD
       'Direct Store Trust & Cash Settlement',
+=======
+      'Direct Kirana Trust & Cash Settlement',
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
       'Zero GPS Reliance (Mental Grid)'
     ],
     reverseRouteOpportunity: {
@@ -130,8 +134,13 @@ export const INITIAL_NATIVE_DRIVERS: NativeDriver[] = [
     completedTrips: 3120,
     specialties: [
       'Krishna Riverbank Unpaved Shortcuts',
+<<<<<<< HEAD
       'Spice & Turmeric Market Stores',
       'Fast Store Stock Stacking'
+=======
+      'Spice & Turmeric Market Kiranas',
+      'Fast Kirana Stock Stacking'
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     ]
   },
   {
@@ -307,7 +316,11 @@ export const INITIAL_CLIENT_DELIVERY_ORDERS: ClientDeliveryOrder[] = [
         type: 'SHELF_LIFE',
         severity: 'CRITICAL',
         title: 'Perishable Dairy Shelf-Life Sensitive (≥70% Required)',
+<<<<<<< HEAD
         description: 'Amul milk batch must arrive within 3 hours to preserve store 70% freshness policy.',
+=======
+        description: 'Amul milk batch must arrive within 3 hours to preserve kirana 70% freshness policy.',
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         recommendedAction: 'Allocate directly to active return driver with insulated cool-box.'
       }
     ]
@@ -424,7 +437,11 @@ export function calculateNativeAffinity(
   // 3. Dialect & Landmark Fluency
   if (driver.dialect.toLowerCase().includes(order.localDialect.toLowerCase().split(' ')[0])) {
     score += 25;
+<<<<<<< HEAD
     reasons.push(`✓ Fluent in ${order.localDialect} & understands store credit traditions`);
+=======
+    reasons.push(`✓ Fluent in ${order.localDialect} & understands kirana credit traditions`);
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   } else {
     score += 15;
   }

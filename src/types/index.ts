@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 export type ServiceClass = 'A' | 'B' | 'C'; // A = Modern Trade, B = General Trade, C = Store Management / General Trade
 export type RetailerType = 'kirana' | 'store_management' | 'modern_trade' | 'distributor';
+=======
+export type ServiceClass = 'A' | 'B' | 'C'; // A = Modern Trade, B = General Trade, C = Small Kirana
+export type RetailerType = 'kirana' | 'modern_trade' | 'distributor';
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 export type ForecastMethod = 'HistGradientBoosting' | 'MovingAverage' | 'Bootstrap' | 'PeerTransfer';
 export type PlanStatus = 'RUNNING' | 'READY' | 'PROVISIONAL' | 'APPROVED' | 'FAILED';
 export type SolverStatus = 'OPTIMAL' | 'FEASIBLE' | 'TIMEOUT';
@@ -8,6 +13,68 @@ export type InTransitStatus = 'IN_TRANSIT' | 'RECEIVED' | 'PARTIAL' | 'REJECTED'
 export type RejectionReason = 'short_shelf_life' | 'damaged' | 'no_space' | 'wrong_sku';
 export type UserRole = 'rohit' | 'sunita' | 'ganesh' | 'priya';
 
+<<<<<<< HEAD
+=======
+export interface PersonaProfile {
+  id: UserRole;
+  name: string;
+  title: string;
+  scope: string;
+  scopeId?: string; // e.g. 'W-PUN' or 'STORE-MH-KOL-001'
+  allowedActions: string[];
+  restrictions: string[];
+  badgeColor: string;
+}
+
+export interface GoodsReceiptNote {
+  grnId: string;
+  warehouseId: string;
+  receivedAt: string;
+  supplierOrPlant: string;
+  sku: string;
+  batchNo: string;
+  receivedQuantityUnits: number;
+  damagedQuantityUnits: number;
+  expiryDate: string;
+  inspectorName: string;
+  status: 'VERIFIED' | 'QUARANTINED' | 'REJECTED';
+  remarks?: string;
+}
+
+export interface KiranaReturn {
+  id: string;
+  storeId: string;
+  sku: string;
+  unitsReturned: number;
+  reason: 'damaged' | 'expired' | 'customer_return' | 'wrong_delivery';
+  occurredAt: string;
+  status: 'LOGGED' | 'SYNCED';
+}
+
+export interface ReplenishmentRequest {
+  id: string;
+  storeId: string;
+  sku: string;
+  requestedCases: number;
+  priority: 'HIGH' | 'NORMAL' | 'URGENT_STOCKOUT';
+  notes?: string;
+  requestedAt: string;
+  status: 'SUBMITTED' | 'APPROVED' | 'ALLOCATED';
+  idempotencyKey: string;
+}
+
+export type AssignmentMode = 'MANUAL' | 'AUTO_SUGGEST_PROFILE';
+
+export interface AssignmentSettings {
+  mode: AssignmentMode;
+  matchNativeDistrict: boolean;
+  enforceLaneWidthClearance: boolean;
+  requireGhatCertificationForHillyRoutes: boolean;
+  prioritizeBackhaulLoads: boolean;
+  maxPayloadUtilizationThreshold: number; // e.g. 90%
+}
+
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 export interface Product {
   sku: string;
   name: string;
@@ -317,6 +384,7 @@ export interface NativeDriver {
   };
 }
 
+<<<<<<< HEAD
 export type MessagePriority = 'CRITICAL' | 'HIGH' | 'MEDIUM';
 export type MessageStatus = 'NEW' | 'ACKNOWLEDGED' | 'RESOLVED';
 export type RelatedModule =
@@ -358,4 +426,80 @@ export interface CriticalMessagesSummary {
 }
 
 
+=======
+// Twilio SMS & Notification Hub Types (FR-P0-09)
+export interface SmsTokenStats {
+  char_count: number;
+  effective_length: number;
+  encoding: string;
+  segments: number;
+  is_single_segment: boolean;
+  max_single_chars: number;
+  remaining_in_segment: number;
+  token_cost_inr: number;
+  token_efficiency_pct: number;
+}
+
+export interface NotificationRule {
+  id: string;
+  category: 'FUEL' | 'ROAD' | 'AGENT' | 'STOCK';
+  title: string;
+  description: string;
+  source_element: string;
+  trigger_condition: string;
+  is_enabled: boolean;
+  message_content: string;
+  severity: 'critical' | 'warning' | 'info';
+  last_triggered_at?: string | null;
+  token_stats?: SmsTokenStats;
+}
+
+export interface TwilioConfig {
+  account_sid: string;
+  auth_token: string;
+  from_phone: string;
+  recipient_phone: string;
+  is_configured: boolean;
+  is_real_twilio: boolean;
+  masked_token?: string;
+}
+
+export interface SmsDispatchLog {
+  id: string;
+  sid: string;
+  status: 'DELIVERED' | 'SENT' | 'SIMULATED' | 'FAILED';
+  mode: string;
+  recipient: string;
+  sender: string;
+  message_content: string;
+  token_stats: SmsTokenStats;
+  timestamp: string;
+  rule_category: string;
+  notice?: string;
+  error?: string;
+  error_code?: number;
+}
+
+export interface MainframeTriggerDetection {
+  category: string;
+  rule_id: string;
+  is_enabled: boolean;
+  event_name: string;
+  current_value: string;
+  threshold: string;
+  severity: 'critical' | 'warning' | 'info';
+  is_triggered: boolean;
+  source: string;
+  suggested_message: string;
+}
+
+export interface MainframeScanResult {
+  scanned_at: string;
+  total_triggers: number;
+  active_triggers: MainframeTriggerDetection[];
+  enabled_triggers: MainframeTriggerDetection[];
+  dispatched_count?: number;
+  dispatched_alerts?: SmsDispatchLog[];
+}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 

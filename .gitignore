@@ -1,1 +1,64 @@
+<<<<<<< HEAD
 node_modules/
+=======
+# Dependencies
+node_modules/
+
+# Production Builds
+dist/
+dist-ssr/
+build/
+
+# Python Cache & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# IDE / Editor configuration
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Explicitly track audited benchmark verification results
+!results/benchmark.json
+
+# FlowGrid FastAPI Backend & SQLite Dev DB
+*.sqlite
+*.sqlite3
+*.db
+flowgrid_dev.db
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b

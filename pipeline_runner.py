@@ -1,5 +1,6 @@
 """
 FlowGrid: AI-Powered Distribution Intelligence & Inventory Optimization Engine
+<<<<<<< HEAD
 Unified Pipeline Runner & Sanity Checker
 Trains the PRD-aligned seven-day quantile forecaster, then runs anomaly,
 inventory allocation, Maharashtra road-risk, and dispatch workflows.
@@ -256,6 +257,20 @@ def run_full_pipeline(csv_path: str = "flowgrid_flipkart_100sku/data/synthetic_s
     print("=" * 80)
     return summary_report
 
+=======
+Root entrypoint shim delegating to scripts/pipeline_runner.py.
+"""
+
+import sys
+from pathlib import Path
+
+# Add project root to sys.path
+ROOT_DIR = Path(__file__).resolve().parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from scripts.pipeline_runner import run_full_pipeline
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 if __name__ == "__main__":
     run_full_pipeline()

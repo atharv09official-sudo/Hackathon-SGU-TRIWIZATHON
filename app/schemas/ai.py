@@ -125,6 +125,7 @@ class RoadRiskAssessmentResponse(BaseModel):
     explanation: str
 
 
+<<<<<<< HEAD
 class ForecastDecisionRequest(BaseModel):
     store_code: str = Field(..., description="Store / Kirana identifier (e.g. RET-GAN)")
     store_name: Optional[str] = Field(default=None, description="Store commercial name")
@@ -225,3 +226,5 @@ class DocumentAuditResponse(BaseModel):
 
 
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b

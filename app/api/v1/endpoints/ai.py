@@ -34,7 +34,10 @@ from app.services.plan_lifecycle_service import PlanLifecycleService
 
 router = APIRouter(prefix="/ai", tags=["AI & Ollama Intelligence"])
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 # Cached instance of RoadRiskDelayPredictor
 _road_risk_predictor = None
 
@@ -421,4 +424,7 @@ def get_road_corridors(
     ]
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b

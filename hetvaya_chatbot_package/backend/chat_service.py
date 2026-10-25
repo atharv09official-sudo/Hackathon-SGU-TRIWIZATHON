@@ -45,12 +45,15 @@ except ImportError:
     Warehouse = Store = Product = InventoryBatch = DistributionPlan = PlanAllocation = None
     HAS_APP_MODELS = False
 
+<<<<<<< HEAD
 try:
     from app.services.fuel_service import FuelPriceService, DISTRIBUTION_CORRIDORS
 except ImportError:
     FuelPriceService = None
     DISTRIBUTION_CORRIDORS = []
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 class StandaloneOllamaService:
     @staticmethod
     def check_connection() -> Tuple[bool, List[Dict[str, Any]]]:
@@ -72,7 +75,11 @@ class StandaloneOllamaService:
     @staticmethod
     def generate(prompt: str, system_prompt: str = '', model: str = None) -> Optional[str]:
         base_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
+<<<<<<< HEAD
         model = model or os.getenv('OLLAMA_MODEL', 'nemotron-3-ultra:cloud')
+=======
+        model = model or os.getenv('OLLAMA_CHAT_MODEL', 'llama3')
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         try:
             payload = {'model': model, 'prompt': prompt, 'system': system_prompt, 'stream': False}
             res = httpx.post(f'{base_url}/api/generate', json=payload, timeout=8.0)
@@ -262,10 +269,13 @@ FMCG_DEMAND: Dict[str, Dict[str, int]] = {
     "SKU-MAG-24": {"RET-DMA": 480, "RET-SAM": 240, "total": 720},
 }
 
+<<<<<<< HEAD
 FMCG_LIVE_FORECASTS: List[Dict[str, Any]] = []
 FMCG_LATEST_IMPORT: Optional[Dict[str, Any]] = None
 
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
 class ProductChatIntelligenceService:
     """
@@ -291,10 +301,13 @@ class ProductChatIntelligenceService:
         ctx = payload.context or ChatQueryContext()
         lang = (payload.language or "en").lower()
 
+<<<<<<< HEAD
         # Ingest live continuous system resources if passed from the frontend
         if ctx.system_resources:
             cls._ingest_system_resources(ctx.system_resources)
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         # 1. Resolve target entities (from context or message text)
         target_sku, target_product = cls._resolve_product(lower_msg, ctx, db)
         target_wh = cls._resolve_warehouse(lower_msg, ctx, db)
@@ -303,6 +316,7 @@ class ProductChatIntelligenceService:
         # 2. Classify intent
         intent = cls._classify_intent(lower_msg)
 
+<<<<<<< HEAD
         # 3. Retrieve authoritative records & execute agentic tools
         sources: List[ChatSourceItem] = []
         retrieved_data: Dict[str, Any] = {}
@@ -388,6 +402,27 @@ class ProductChatIntelligenceService:
                 "output_summary": f"Audited document ({retrieved_data.get('audit', {}).get('verdict', 'ANALYZED')}) under 5% rule (FR-02).",
                 "status": "SUCCESS",
             })
+=======
+        # 3. Retrieve authoritative records
+        sources: List[ChatSourceItem] = []
+        retrieved_data: Dict[str, Any] = {}
+        missing_info: Optional[str] = None
+
+        if intent == "out_of_stock":
+            retrieved_data, sources = cls._get_out_of_stock_data(db, target_wh)
+        elif intent == "expiry_risk":
+            retrieved_data, sources = cls._get_expiry_risk_data(db, target_sku)
+        elif intent == "stock_availability":
+            retrieved_data, sources, missing_info = cls._get_stock_availability_data(db, target_sku, target_wh)
+        elif intent == "warehouse_sourcing":
+            retrieved_data, sources, missing_info = cls._get_warehouse_sourcing_data(db, target_sku)
+        elif intent == "allocation_explanation":
+            retrieved_data, sources, missing_info = cls._get_allocation_explanation_data(db, ctx, target_sku, target_ret)
+        elif intent == "freight_cost":
+            retrieved_data, sources, missing_info = cls._get_freight_cost_data(db, target_wh, target_ret)
+        elif intent == "demand_forecast":
+            retrieved_data, sources = cls._get_demand_forecast_data(db, target_sku)
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         else:
             # General query / Fallback
             retrieved_data, sources, missing_info = cls._get_general_catalog_data(db, lower_msg, target_sku)
@@ -413,6 +448,10 @@ class ProductChatIntelligenceService:
             except Exception as exc:
                 logger.warning("Ollama chat generation failed, using deterministic synthesis: %s", exc)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         if not answer:
             answer = cls._synthesize_deterministic_response(
                 intent=intent,
@@ -428,8 +467,11 @@ class ProductChatIntelligenceService:
         # 5. Build dynamic follow-ups
         followups = cls._generate_followups(intent, target_sku, target_wh, target_ret)
 
+<<<<<<< HEAD
         active_model_name = os.getenv("OLLAMA_MODEL", "nemotron-3-ultra:cloud")
 
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         return ChatQueryResponse(
             answer=answer,
             conversation_id=payload.conversation_id,
@@ -437,9 +479,12 @@ class ProductChatIntelligenceService:
             intent=intent,
             suggested_followups=followups,
             is_ai_generated=is_ai_generated,
+<<<<<<< HEAD
             active_model=active_model_name,
             tools_executed=tools_executed,
             structured_card=structured_card,
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             missing_information=missing_info,
         )
 
@@ -557,8 +602,11 @@ class ProductChatIntelligenceService:
 
     @classmethod
     def _classify_intent(cls, msg: str) -> str:
+<<<<<<< HEAD
         if any(w in msg for w in ["fuel", "diesel", "petrol", "fuel price", "diesel rate", "fuel surcharge", "fuel cost", "serp", "rss", "oil price"]):
             return "fuel_prices"
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         if any(w in msg for w in ["out of stock", "zero stock", "no stock", "stockout", "unavailable stock"]):
             return "out_of_stock"
         if any(w in msg for w in ["expiry", "expire", "expiring", "shelf life", "fefo", "at risk", "perish"]):
@@ -571,15 +619,19 @@ class ProductChatIntelligenceService:
             return "allocation_explanation"
         if any(w in msg for w in ["freight", "transport cost", "shipping cost", "cost per case", "transit time", "delivery eta", "logistics cost", "freight cost"]):
             return "freight_cost"
+<<<<<<< HEAD
         if any(w in msg for w in ["audit prediction", "prediction decision", "audit forecast", "forecast decision", "audit ml", "prediction rationale", "ml decision", "why this forecast", "explain forecast", "forecast audit"]):
             return "forecast_decision_audit"
         if any(w in msg for w in ["import", "master data", "inventory batches", "5% rule", "5% error", "threshold", "row errors", "priya", "rohit", "clean demo", "18% error", "3% error", "rejected rows", "csv import", "xlsx import", "import studio", "audit document"]):
             return "import_document_audit"
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         if any(w in msg for w in ["demand", "forecast", "high demand", "popular", "fastest moving"]):
             return "demand_forecast"
         return "general_query"
 
     # -------------------------------------------------------------------------
+<<<<<<< HEAD
     # Data Retrieval Helpers & Continuous Resource Ingestion
     # -------------------------------------------------------------------------
 
@@ -722,6 +774,12 @@ class ProductChatIntelligenceService:
         return fuel_res, sources, tools, card
 
     @classmethod
+=======
+    # Data Retrieval Helpers
+    # -------------------------------------------------------------------------
+
+    @classmethod
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     def _get_out_of_stock_data(
         cls,
         db: Session,
@@ -799,7 +857,11 @@ class ProductChatIntelligenceService:
                     "expiry_date": b["expiry_date"],
                     "qty_units": b["qty_units"],
                     "remaining_shelf_life_pct": round(b.get("shelf_life_pct", 0.0) * 100, 1),
+<<<<<<< HEAD
                     "risk_reason": "Remaining shelf life is below Store Management intake threshold (70%)",
+=======
+                    "risk_reason": "Remaining shelf life is below Kirana intake threshold (70%)",
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
                 }
                 at_risk_batches.append(item)
                 sources.append(
@@ -989,7 +1051,11 @@ class ProductChatIntelligenceService:
             "assigned_warehouse": FMCG_WAREHOUSES.get(sourcing_wh, {}).get("name", sourcing_wh),
             "freight_cost_per_case": freight_cost,
             "fefo_rule_applied": "Strict FEFO guard validated against retailer minimum shelf-life threshold (70%)",
+<<<<<<< HEAD
             "optimization_objective": "Minimized total landed distribution cost while maintaining 100% store intake shelf-life compliance",
+=======
+            "optimization_objective": "Minimized total landed distribution cost while maintaining 100% kirana intake shelf-life compliance",
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         }
 
         sources = [
@@ -1086,6 +1152,7 @@ class ProductChatIntelligenceService:
         return {"forecasts": forecasts}, sources
 
     @classmethod
+<<<<<<< HEAD
     def _get_forecast_decision_data(
         cls,
         db: Session,
@@ -1311,6 +1378,8 @@ class ProductChatIntelligenceService:
         return {"audit": audit_dict, "file_name": file_name}, sources
 
     @classmethod
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     def _get_general_catalog_data(
         cls,
         db: Session,
@@ -1434,7 +1503,11 @@ class ProductChatIntelligenceService:
                 f"**{prod_name}** (`{sku}`) was allocated from **{wh_name}** to **{ret_name}** for two verified reasons:\n"
                 f"1. **Logistics Cost Optimization:** {wh_name} offers the lowest verified freight rate to this destination at **₹{cost}/case**.\n"
                 f"2. **Shelf Life & FEFO Invariant:** The dispatched batch satisfies the retailer's strict 70% remaining shelf-life threshold, preventing stock returns and damage claims.\n"
+<<<<<<< HEAD
                 f"3. **Store Management Backroom Constraint:** Dispatched batch quantities respect the store's physical storage limit."
+=======
+                f"3. **Kirana Backroom Constraint:** Dispatched batch quantities respect the store's physical storage limit."
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             )
 
         elif intent == "freight_cost":
@@ -1449,6 +1522,7 @@ class ProductChatIntelligenceService:
                 f"**Authoritative Freight & Transit Rates:**\n\n{routes_text}\n\n"
                 f"These rates represent negotiated carrier corridor contracts with zero hidden surcharges."
             )
+<<<<<<< HEAD
         elif intent == "forecast_decision_audit":
             dec = retrieved_data.get("decision", {})
             sku = dec.get("sku", "SKU-ATT-05")
@@ -1483,6 +1557,8 @@ class ProductChatIntelligenceService:
                 f"**Key Decision Drivers:**\n"
                 f"{factors_md}"
             )
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 
         elif intent == "demand_forecast":
             forecasts = retrieved_data.get("forecasts", [])
@@ -1493,6 +1569,7 @@ class ProductChatIntelligenceService:
             return (
                 f"**Top FMCG Demand Forecasts (Current Planning Cycle):**\n\n"
                 + "\n".join(lines)
+<<<<<<< HEAD
                 + "\n\nAll forecasts incorporate historical consumption, seasonal store patterns, and festival surge modeling."
             )
         elif intent == "fuel_prices":
@@ -1589,10 +1666,14 @@ class ProductChatIntelligenceService:
                 f"{op_risk}\n\n"
                 f"**📋 Recommended Remediation Steps:**\n"
                 f"{remediation_md}"
+=======
+                + "\n\nAll forecasts incorporate historical consumption, seasonal Kirana patterns, and festival surge modeling."
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             )
 
         else:
             return (
+<<<<<<< HEAD
                 f"I am your **HETVAYA Agentic Copilot** powered by `nemotron-3-ultra:cloud`. I can answer questions grounded in real product catalog, "
                 f"inventory levels, batch expiry (FEFO), warehouse sourcing, distribution plans, and live fuel prices across India.\n\n"
                 f"Try asking:\n"
@@ -1600,6 +1681,15 @@ class ProductChatIntelligenceService:
                 f"• *Which products are currently out of stock?*\n"
                 f"• *Which products are at risk of expiry (FEFO)?*\n"
                 f"• *What is the available inventory for Aashirvaad Atta?*\n"
+=======
+                f"I am your **HETVAYA Product AI Assistant**. I can answer questions grounded in real product catalog, "
+                f"inventory levels, batch expiry (FEFO), warehouse sourcing, distribution plans, and freight rates.\n\n"
+                f"Try asking:\n"
+                f"• *Which products are currently out of stock?*\n"
+                f"• *Which products are at risk of expiry?*\n"
+                f"• *What is the available inventory for Aashirvaad Atta?*\n"
+                f"• *Which warehouse can supply Amul Milk?*\n"
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
                 f"• *What is the estimated freight cost from Pune to D-Mart?*"
             )
 
@@ -1634,8 +1724,11 @@ class ProductChatIntelligenceService:
             temperature=0.1,
             json_format=False,
         )
+<<<<<<< HEAD
         if res.is_fallback or "Fallback response generated" in (res.response or ""):
             return None
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
         return res.response.strip()
 
     # -------------------------------------------------------------------------
@@ -1683,6 +1776,7 @@ class ProductChatIntelligenceService:
             ]
         elif intent == "freight_cost":
             return [
+<<<<<<< HEAD
                 "What are the current fuel prices and freight surcharges in Maharashtra?",
                 "Which warehouse can supply this product?",
                 "Why was this product allocated to this retailer?",
@@ -1705,4 +1799,16 @@ class ProductChatIntelligenceService:
                 "Which products are currently out of stock?",
                 "Which products are at risk of expiry?",
                 "What is the available inventory for Aashirvaad Atta?",
+=======
+                "Which warehouse can supply this product?",
+                "Why was this product allocated to this retailer?",
+                "What is the available inventory for Fortune Oil?",
+            ]
+        else:
+            return [
+                "Which products are currently out of stock?",
+                "Which products are at risk of expiry?",
+                "What is the available inventory for Aashirvaad Atta?",
+                "What is the estimated freight cost?",
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
             ]

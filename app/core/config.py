@@ -8,7 +8,11 @@ class Settings(BaseSettings):
     Central application settings loaded from environment variables.
     Follows strict security practices: no hardcoded secrets and secret masking.
     """
+<<<<<<< HEAD
     PROJECT_NAME: str = "HETVAYA"
+=======
+    PROJECT_NAME: str = "FlowGrid"
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     VERSION: str = "0.1.0"
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "development"
@@ -37,6 +41,7 @@ class Settings(BaseSettings):
     # Core Architecture Authority Rules
     ALLOW_DIRECT_DECISION_COMMIT: bool = False  # Strict rule: decision service can NEVER directly commit
     
+<<<<<<< HEAD
     # Ollama Local / Cloud LLM Configuration
     OLLAMA_BASE_URL: str = "http://localhost:11434"
     OLLAMA_MODEL: str = "nemotron-3-ultra:cloud"
@@ -48,6 +53,20 @@ class Settings(BaseSettings):
     SERPAPI_API_KEY: Optional[str] = None
     BASE_DIESEL_PRICE_INR: float = 90.00
     FUEL_SENSITIVITY_FACTOR: float = 0.45
+=======
+    # Ollama Local LLM Configuration
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "llama3.2:latest"
+    OLLAMA_FALLBACK_MODEL: str = "gemma4:12b"
+    OLLAMA_TIMEOUT_SECONDS: float = 30.0
+    OLLAMA_ENABLED: bool = True
+
+    # Twilio SMS Gateway Configuration (PRD FR-P0-09)
+    TWILIO_ACCOUNT_SID: Optional[str] = None
+    TWILIO_AUTH_TOKEN: Optional[str] = None
+    TWILIO_PHONE_NUMBER: Optional[str] = None
+    TWILIO_RECIPIENT_PHONE: Optional[str] = None
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
     
     model_config = SettingsConfigDict(
         env_file=".env",

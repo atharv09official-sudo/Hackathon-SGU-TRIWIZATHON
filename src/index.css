@@ -18,6 +18,7 @@
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --font-parmyo: 'Parmyo', var(--font-sans);
+<<<<<<< HEAD
 
     /* FlowGrid Modern Light Enterprise Theme Color Palette */
     --color-main-bg: #FFFFFF;
@@ -54,10 +55,13 @@
     --input: #E7E5E4;
     --ring: #2563EB;
     --radius: 0.75rem;
+=======
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
   }
 
   body {
     font-family: var(--font-sans);
+<<<<<<< HEAD
     background-color: #FFF8E7;
     color: #1E293B;
     overflow-x: hidden;
@@ -85,11 +89,47 @@
 }
 
 /* Custom Light Enterprise Scrollbar */
+=======
+    color-scheme: light;
+    background-color: #fbf4e5;
+    color: #0a192f;
+    overflow-x: hidden;
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
+  .maplibregl-ctrl-attrib {
+    @apply bg-background! text-muted-foreground! border-border! rounded-md! border! shadow-sm!;
+  }
+  .maplibregl-ctrl-attrib a {
+    @apply text-muted-foreground!;
+  }
+  .maplibregl-ctrl-attrib a:hover {
+    @apply text-foreground!;
+  }
+  .maplibregl-ctrl-attrib-button {
+    @apply bg-transparent! dark:invert;
+  }
+}
+
+/* Custom modern scrollbar */
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
+<<<<<<< HEAD
   background: #FFF8E7;
 }
 ::-webkit-scrollbar-thumb {
@@ -98,6 +138,16 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #A8A29E;
+=======
+  background: #f3f1ea;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(71, 85, 105, 0.55);
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 }
 
 .font-parmyo {
@@ -105,17 +155,28 @@
   letter-spacing: 0.02em;
 }
 
+<<<<<<< HEAD
 /* FlowGrid Cards & Panels */
 .glass-panel {
   background: #FFFFFF;
   border: 1px solid #E7E5E4;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+=======
+/* Glassmorphism utilities */
+.glass-panel {
+
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 }
 
 .glass-panel-hover {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-panel-hover:hover {
+<<<<<<< HEAD
   background: #FFFFFF;
   border-color: #2563EB;
   box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.12), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
@@ -228,6 +289,29 @@
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.7; transform: scale(0.97); }
+=======
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px -3px rgba(99, 102, 241, 0.15);
+}
+
+.glow-indigo {
+  box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.35);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
+}
+
+.glow-amber {
+  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.35);
+}
+
+/* Pulse animation for live sync status */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.96); }
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 }
 
 .animate-pulse-subtle {
@@ -236,12 +320,17 @@
 
 /* ==========================================================================
    DAY & NIGHT THEME SYSTEM
+<<<<<<< HEAD
    Day mode: Clean light enterprise (White, Warm Cream, Navy, Blue)
+=======
+   Day mode: White, Cream Navy background, Navy Blue buttons, Multi-colored fonts
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
    Night mode: Cosmic Slate-950, deep navy glass panels, neon glows
    ========================================================================== */
 
 /* Day Mode Variables & Overrides */
 .theme-day {
+<<<<<<< HEAD
   --bg-main: #FFFFFF;
   --bg-cream: #FFF8E7; /* Warm cream */
   --bg-section: #FAF3E0; /* Light cream */
@@ -267,6 +356,185 @@
   box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.12) !important;
 }
 
+=======
+  --bg-main: #fbf4e5;
+  --bg-cream-navy: #fffaf0;
+  --bg-card: #ffffff;
+  --border-card: #e8e1d2;
+  --text-primary: #0a192f;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  color: #0a192f;
+  background-color: #fbf4e5;
+}
+
+.theme-day .glass-panel {
+  background: #ffffff !important;
+  border-color: #e8e1d2 !important;
+  box-shadow: 0 4px 20px -2px rgba(10, 25, 47, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  color: #0f172a;
+}
+
+.theme-day .glass-panel-hover:hover {
+  background: #fdfcf9 !important;
+  border-color: #0a192f !important;
+  box-shadow: 0 10px 25px -4px rgba(10, 25, 47, 0.12) !important;
+}
+
+/* Light-only workspace surfaces, matched to the warm ivory reference. */
+.theme-day [class*="bg-slate-950"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="bg-slate-900"]:not(.preserve-dark):not(.preserve-dark *) {
+  background-color: #ffffff !important;
+}
+
+.theme-day [class*="bg-slate-800"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="bg-slate-700"]:not(.preserve-dark):not(.preserve-dark *) {
+  background-color: #f5f3ed !important;
+}
+
+.theme-day [class*="bg-indigo-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #eef2ff !important; }
+.theme-day [class*="bg-purple-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #f5f3ff !important; }
+.theme-day [class*="bg-emerald-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #ecfdf5 !important; }
+.theme-day [class*="bg-amber-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #fffbeb !important; }
+.theme-day [class*="bg-rose-950"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="bg-red-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #fff1f2 !important; }
+
+/* Preserved dark containers (such as phone simulator, dark terminals, command banners) */
+.theme-day .preserve-dark,
+.theme-day [class*="preserve-dark"] {
+  background-color: #0b1329 !important;
+  border-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+.theme-day .preserve-dark [class*="bg-slate-950"] { background-color: #020617 !important; }
+.theme-day .preserve-dark [class*="bg-slate-900"] { background-color: #0f172a !important; }
+.theme-day .preserve-dark [class*="bg-slate-800"] { background-color: #1e293b !important; }
+.theme-day .preserve-dark [class*="bg-slate-700"] { background-color: #334155 !important; }
+.theme-day .preserve-dark [class*="border-slate-800"],
+.theme-day .preserve-dark [class*="border-slate-700"] { border-color: #334155 !important; }
+.theme-day .preserve-dark [class~="text-white"],
+.theme-day .preserve-dark [class~="text-slate-100"] { color: #ffffff !important; }
+.theme-day .preserve-dark [class~="text-slate-300"] { color: #cbd5e1 !important; }
+.theme-day .preserve-dark [class~="text-slate-400"] { color: #94a3b8 !important; }
+.theme-day .preserve-dark [class~="text-slate-500"] { color: #64748b !important; }
+
+/* Day mode text colors on regular light panels */
+.theme-day [class~="text-white"]:not(.btn-navy):not(.btn-navy *):not([class*="bg-indigo-6"]):not([class*="bg-indigo-5"]):not([class*="bg-indigo-7"]):not([class*="bg-emerald-6"]):not([class*="bg-emerald-7"]):not([class*="bg-emerald-5"]):not([class*="bg-rose-6"]):not([class*="bg-rose-7"]):not([class*="bg-red-6"]):not([class*="bg-amber-6"]):not([class*="bg-purple-6"]):not([class*="bg-purple-7"]):not([class*="bg-sky-6"]):not([class*="bg-blue-6"]):not([class*="bg-[#0a192f]"]):not([class*="bg-indigo-6"] *):not([class*="bg-indigo-5"] *):not([class*="bg-indigo-7"] *):not([class*="bg-emerald-6"] *):not([class*="bg-emerald-7"] *):not([class*="bg-emerald-5"] *):not([class*="bg-rose-6"] *):not([class*="bg-rose-7"] *):not([class*="bg-red-6"] *):not([class*="bg-amber-6"] *):not([class*="bg-purple-6"] *):not([class*="bg-purple-7"] *):not([class*="bg-sky-6"] *):not([class*="bg-blue-6"] *):not([class*="bg-[#0a192f]"] *):not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class~="text-slate-100"]:not(.btn-navy):not(.btn-navy *):not([class*="bg-indigo-"]):not([class*="bg-emerald-"]):not([class*="bg-rose-"]):not([class*="bg-purple-"]):not([class*="bg-[#0a192f]"]):not(.preserve-dark):not(.preserve-dark *) {
+  color: #16243a !important;
+}
+
+.theme-day [class~="text-slate-200"]:not(.preserve-dark *) { color: #26364e !important; }
+.theme-day [class~="text-slate-300"]:not(.preserve-dark *) { color: #475569 !important; }
+.theme-day [class~="text-slate-400"]:not(.preserve-dark *) { color: #64748b !important; }
+.theme-day [class~="text-indigo-100"]:not(.preserve-dark *) { color: #3730a3 !important; }
+.theme-day [class~="text-indigo-200"]:not([class*="bg-indigo-6"] *):not(.preserve-dark *) { color: #4338ca !important; }
+.theme-day [class*="text-indigo-300"]:not([class*="bg-indigo-6"] *):not(.preserve-dark *) { color: #4f46e5 !important; }
+.theme-day [class*="text-indigo-400"]:not([class*="bg-indigo-6"] *):not(.preserve-dark *) { color: #4338ca !important; }
+
+/* High-contrast WCAG AA accessible colors for Day Mode text on white/cream backgrounds */
+.theme-day [class*="text-emerald-300"]:not([class*="bg-emerald-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-emerald-400"]:not([class*="bg-emerald-6"] *):not(.preserve-dark *) { color: #047857 !important; }
+
+.theme-day [class*="text-amber-300"]:not([class*="bg-amber-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-amber-400"]:not([class*="bg-amber-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-amber-200"]:not([class*="bg-amber-6"] *):not(.preserve-dark *) { color: #b45309 !important; }
+
+.theme-day [class*="text-rose-300"]:not([class*="bg-rose-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-rose-400"]:not([class*="bg-rose-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-red-400"]:not([class*="bg-rose-6"] *):not(.preserve-dark *) { color: #be123c !important; }
+
+.theme-day [class*="text-purple-300"]:not([class*="bg-purple-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-purple-400"]:not([class*="bg-purple-6"] *):not(.preserve-dark *) { color: #6d28d9 !important; }
+
+.theme-day [class*="text-cyan-300"]:not(.preserve-dark *),
+.theme-day [class*="text-cyan-400"]:not(.preserve-dark *),
+.theme-day [class*="text-sky-400"]:not(.preserve-dark *) { color: #0e7490 !important; }
+
+/* Guaranteed crisp white text and icons on buttons and solid-colored elements in Day mode */
+.theme-day button[class~="text-white"],
+.theme-day a[class~="text-white"],
+.theme-day [class*="bg-indigo-6"] [class~="text-white"],
+.theme-day [class*="bg-indigo-5"] [class~="text-white"],
+.theme-day [class*="bg-indigo-7"] [class~="text-white"],
+.theme-day [class*="bg-emerald-6"] [class~="text-white"],
+.theme-day [class*="bg-emerald-7"] [class~="text-white"],
+.theme-day [class*="bg-emerald-5"] [class~="text-white"],
+.theme-day [class*="bg-rose-6"] [class~="text-white"],
+.theme-day [class*="bg-rose-7"] [class~="text-white"],
+.theme-day [class*="bg-red-6"] [class~="text-white"],
+.theme-day [class*="bg-amber-6"] [class~="text-white"],
+.theme-day [class*="bg-purple-6"] [class~="text-white"],
+.theme-day [class*="bg-purple-7"] [class~="text-white"],
+.theme-day [class*="bg-sky-6"] [class~="text-white"],
+.theme-day [class*="bg-blue-6"] [class~="text-white"],
+.theme-day [class*="bg-[#0a192f]"] [class~="text-white"],
+.theme-day .btn-navy [class~="text-white"],
+.theme-day [class*="bg-indigo-6"] [class~="text-slate-100"],
+.theme-day [class*="bg-emerald-6"] [class~="text-slate-100"],
+.theme-day [class*="bg-rose-6"] [class~="text-slate-100"],
+.theme-day [class*="bg-[#0a192f]"] [class~="text-slate-100"],
+.theme-day .btn-navy [class~="text-slate-100"],
+.theme-day [class*="bg-indigo-6"] > span,
+.theme-day [class*="bg-emerald-6"] > span,
+.theme-day [class*="bg-rose-6"] > span,
+.theme-day [class*="bg-[#0a192f]"] > span,
+.theme-day .btn-navy > span {
+  color: #ffffff !important;
+}
+
+/* Subtle & ghost buttons in Day mode: prevent hover:text-white from washing out */
+.theme-day button[class*="hover:text-white"]:not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-amber"]):not(.btn-navy):not(.preserve-dark):hover,
+.theme-day button.hover\:text-white:not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-amber"]):not(.btn-navy):not(.preserve-dark):hover {
+  color: #0a192f !important;
+  background-color: #ede8dc !important;
+}
+
+/* Sidebar nav item hover in Day mode */
+.theme-day aside button:not(.btn-navy):not([class*="bg-indigo-600"]):hover {
+  background-color: #f1ece1 !important;
+  color: #0a192f !important;
+}
+.theme-day aside button:not(.btn-navy):not([class*="bg-indigo-600"]):hover svg {
+  color: #4f46e5 !important;
+}
+
+/* Table rows and header cells in Day mode */
+.theme-day table tr:hover:not(.preserve-dark *) {
+  background-color: #f8f6f0 !important;
+}
+.theme-day table th:not(.preserve-dark *) {
+  color: #475569 !important;
+  background-color: #faf8f2 !important;
+  border-color: #e7e4dc !important;
+}
+.theme-day table td:not(.preserve-dark *) {
+  border-color: #ede9e0 !important;
+}
+
+/* Borders in Day mode */
+.theme-day [class*="border-slate-900"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="border-slate-800"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="border-slate-700"]:not(.preserve-dark):not(.preserve-dark *) {
+  border-color: #e7e4dc !important;
+}
+
+/* Input focus ring and border in Day mode */
+.theme-day input:focus,
+.theme-day select:focus,
+.theme-day textarea:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+  outline: none !important;
+}
+
+.theme-day aside,
+.theme-day header,
+.theme-day footer { backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+.theme-day footer { background-color: #fffdf8 !important; border-color: #e7e4dc !important; }
+
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
 /* Navy Blue Button Class (Required for Day mode buttons) */
 .btn-navy {
   background-color: #0a192f !important;
@@ -441,4 +709,17 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+<<<<<<< HEAD
 }
+=======
+}
+
+.theme-day .context-title > span:nth-child(n + 4) { display: none; }
+
+/* Kept out of <body> classes: the .theme-day rules skip anything inside a
+   [class*="bg-indigo-5"] ancestor, and "selection:bg-indigo-500" matched that. */
+::selection {
+  background-color: #6366f1;
+  color: #ffffff;
+}
+>>>>>>> 6209d0dc29978b08b561485c7af41eb3eb82c39b
