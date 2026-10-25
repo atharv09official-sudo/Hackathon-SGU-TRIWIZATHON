@@ -305,10 +305,13 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
   };
 
   const selectedRule = rules.find((r) => r.id === selectedRuleId) || rules[0];
+<<<<<<< HEAD
   // Rules load async; keep the preview safe while the list is still empty.
   const selectedMessage = selectedRule?.message_content ?? '';
   const selectedChars = selectedRule?.token_stats?.char_count || selectedMessage.length;
   const selectedSegments = selectedRule?.token_stats?.segments || 1;
+=======
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -451,7 +454,11 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
             <button
               onClick={() => handleSimulateEventTrigger('ROAD')}
               disabled={isSending !== null}
+<<<<<<< HEAD
               className="mt-3 text-xs py-1.5 px-3 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-700 border border-rose-500/40 font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+=======
+              className="mt-3 text-xs py-1.5 px-3 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/40 font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
             >
               <Send className="w-3 h-3" /> Simulate &amp; Trigger SMS
             </button>
@@ -461,7 +468,11 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
           <div className="bg-slate-950/60 p-4 rounded-xl border border-sky-500/30 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between">
+<<<<<<< HEAD
                 <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-sky-500/20 text-sky-700 border border-sky-500/30">
+=======
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
                   <Truck className="w-3 h-3" /> AGENT ISSUE
                 </span>
                 <span className="text-xs text-sky-400 font-bold">VEHICLE FAULT</span>
@@ -474,7 +485,11 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
             <button
               onClick={() => handleSimulateEventTrigger('AGENT')}
               disabled={isSending !== null}
+<<<<<<< HEAD
               className="mt-3 text-xs py-1.5 px-3 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-sky-700 border border-sky-500/40 font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+=======
+              className="mt-3 text-xs py-1.5 px-3 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 text-sky-200 border border-sky-500/40 font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
             >
               <Send className="w-3 h-3" /> Simulate &amp; Trigger SMS
             </button>
@@ -867,8 +882,13 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Current Selected Message:</span>
                   <span className="font-mono font-bold text-white">
+<<<<<<< HEAD
                     {selectedChars} chars (
                     {selectedSegments} segment)
+=======
+                    {selectedRule.token_stats?.char_count || selectedRule.message_content.length} chars (
+                    {selectedRule.token_stats?.segments || 1} segment)
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -913,10 +933,17 @@ export const NotificationsView: React.FC<NotificationsViewProps> = ({
 
                 {/* Simulated SMS Message Bubble */}
                 <div className="self-start max-w-[88%] bg-indigo-600 text-white rounded-2xl rounded-tl-sm p-3.5 text-xs shadow-md shadow-indigo-600/20 font-sans leading-relaxed">
+<<<<<<< HEAD
                   <p>{selectedMessage || 'Loading alert templates…'}</p>
                   <div className="text-[9px] text-indigo-200 mt-1.5 flex items-center justify-between font-mono">
                     <span>
                       {selectedChars} ch · 1 seg
+=======
+                  <p>{selectedRule.message_content}</p>
+                  <div className="text-[9px] text-indigo-200 mt-1.5 flex items-center justify-between font-mono">
+                    <span>
+                      {selectedRule.token_stats?.char_count || selectedRule.message_content.length} ch · 1 seg
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
                     </span>
                     <span>Delivered</span>
                   </div>

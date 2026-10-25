@@ -268,6 +268,7 @@ export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
     <div className={`space-y-6 pb-24 transition-colors duration-300 ${isDay ? 'theme-day' : 'theme-night'}`}>
       {/* Toast Notification */}
       {toastMessage && (
+<<<<<<< HEAD
         <div className="preserve-dark fixed top-14 right-6 z-50 animate-in fade-in slide-in-from-top-3 duration-200 max-w-md p-4 rounded-2xl bg-[#0a192f] text-white border border-cyan-400/40 shadow-2xl flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <Sparkles className="w-5 h-5 text-cyan-400 shrink-0 animate-pulse" />
@@ -281,6 +282,11 @@ export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
           >
             <X className="w-4 h-4" />
           </button>
+=======
+        <div className="preserve-dark fixed bottom-6 right-6 z-50 animate-bounce max-w-md p-4 rounded-2xl bg-[#0a192f] text-white border border-cyan-400/40 shadow-2xl flex items-center gap-3">
+          <Sparkles className="w-5 h-5 text-cyan-400 shrink-0" />
+          <span className="text-xs font-semibold leading-relaxed">{toastMessage}</span>
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
         </div>
       )}
 

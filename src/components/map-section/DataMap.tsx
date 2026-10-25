@@ -256,7 +256,11 @@ export function DataMap({
         {/* Central Dispatch Hub: Pune Control Tower */}
         <MapMarker longitude={NETWORK_HUB.lng} latitude={NETWORK_HUB.lat}>
           <MarkerContent>
+<<<<<<< HEAD
             <div className="relative group cursor-pointer z-30 -translate-y-8">
+=======
+            <div className="relative group cursor-pointer z-30">
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
               <div className="absolute -inset-2 rounded-full bg-cyan-400/25 animate-ping pointer-events-none" />
               <div className="absolute -inset-1 rounded-full bg-indigo-500/40 blur-sm pointer-events-none" />
               <div className="relative flex items-center gap-2 rounded-full border-2 border-cyan-400 bg-slate-950 px-3 py-1 text-xs font-bold text-white shadow-2xl">
@@ -375,7 +379,11 @@ export function DataMap({
       <div className="absolute left-3.5 bottom-3.5 z-10 flex flex-wrap items-center gap-2.5 rounded-full border border-slate-700/70 bg-slate-950/85 px-4 py-1.5 text-xs text-white shadow-2xl backdrop-blur-md font-medium">
         <span className="flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-cyan-400 animate-pulse" />
+<<<<<<< HEAD
           <span className="text-[11px] text-cyan-700 font-semibold">Pune Hub</span>
+=======
+          <span className="text-[11px] text-cyan-200 font-semibold">Pune Hub</span>
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
         </span>
         <span className="text-slate-600">•</span>
         <span className="flex items-center gap-1.5">

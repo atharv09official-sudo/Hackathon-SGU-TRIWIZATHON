@@ -947,6 +947,7 @@ export const FlowGridAPI = {
     }
     return FlowGridAPI.getLocalSmsLogs();
   },
+<<<<<<< HEAD
 
   /**
    * Save SMS Smart Alert Settings for persona
@@ -1020,6 +1021,8 @@ export const FlowGridAPI = {
     }
     return null;
   },
+=======
+>>>>>>> 721375da85eccced142f364756199ec57ecf2543
 };
 
 export const DEFAULT_NOTIFICATION_RULES: NotificationRule[] = [
