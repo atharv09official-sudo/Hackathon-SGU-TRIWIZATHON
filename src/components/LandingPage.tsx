@@ -15,7 +15,7 @@ import {
   FileCheck,
   ChevronRight,
   Check,
-  Info
+  Info,
 } from 'lucide-react';
 import {
   INITIAL_BATCHES,
@@ -23,10 +23,11 @@ import {
   INITIAL_PRODUCTS,
   INITIAL_RETAILERS,
   INITIAL_ROUTES,
-  INITIAL_WAREHOUSES
+  INITIAL_WAREHOUSES,
 } from '../data/mockData';
 import { PLAN_HORIZON_DAYS, SYNTHETIC_SALES_PANEL } from '../data/demoScope';
 import { runOptimizationEngine } from '../services/optimizationEngine';
+import { TerraDusk } from './TerraDusk';
 import './LandingPage.css';
 
 type PreviewTab = 'replenishment' | 'forecast' | 'dispatch';
@@ -48,19 +49,19 @@ export const LandingPage: React.FC = () => {
 
   const sampleLine = samplePlan.lines[0];
   const sampleForecast = INITIAL_FORECASTS.find(
-    f => f.retailerId === sampleLine?.retailerId && f.sku === sampleLine?.sku
+    (f) => f.retailerId === sampleLine?.retailerId && f.sku === sampleLine?.sku,
   );
-  const sampleProduct = INITIAL_PRODUCTS.find(p => p.sku === sampleLine?.sku);
-  const sampleRetailer = INITIAL_RETAILERS.find(r => r.id === sampleLine?.retailerId);
-  const sampleWarehouse = INITIAL_WAREHOUSES.find(w => w.id === sampleLine?.warehouseId);
+  const sampleProduct = INITIAL_PRODUCTS.find((p) => p.sku === sampleLine?.sku);
+  const sampleRetailer = INITIAL_RETAILERS.find((r) => r.id === sampleLine?.retailerId);
+  const sampleWarehouse = INITIAL_WAREHOUSES.find((w) => w.id === sampleLine?.warehouseId);
   const sampleRoute = INITIAL_ROUTES.find(
-    r => r.warehouseId === sampleLine?.warehouseId && r.retailerId === sampleLine?.retailerId
+    (r) => r.warehouseId === sampleLine?.warehouseId && r.retailerId === sampleLine?.retailerId,
   );
 
   const sourceStock = useMemo(() => {
     if (!sampleLine) return 0;
     return INITIAL_BATCHES
-      .filter(b => b.warehouseId === sampleLine.warehouseId && b.sku === sampleLine.sku)
+      .filter((b) => b.warehouseId === sampleLine.warehouseId && b.sku === sampleLine.sku)
       .reduce((sum, b) => sum + Math.max(0, b.qtyUnits - b.reservedUnits), 0);
   }, [sampleLine]);
 
@@ -72,7 +73,7 @@ export const LandingPage: React.FC = () => {
       <div className="flowgrid-bg-grid" />
 
       {/* ---------------------------------------------------------------------- */}
-      {/* 1. TOP NAVIGATION BAR                                                   */}
+      {/* 1. STICKY TOP NAVIGATION BAR                                             */}
       {/* ---------------------------------------------------------------------- */}
       <nav className="flowgrid-navbar" aria-label="Main Navigation">
         <div className="flowgrid-nav-container">
@@ -114,80 +115,121 @@ export const LandingPage: React.FC = () => {
       </nav>
 
       {/* ---------------------------------------------------------------------- */}
-      {/* 2. HERO SECTION                                                        */}
+      {/* 2. HERO SECTION — SPLIT LAYOUT                                         */}
+      {/* Content left | live allocation feed visual right                       */}
       {/* ---------------------------------------------------------------------- */}
-      <header className="flowgrid-hero-section">
-        <div className="flowgrid-hero-container">
-          {/* Announcement Tag */}
-          <div className="flowgrid-announcement-pill">
-            <Sparkles size={14} className="announcement-sparkle" />
-            <span className="announcement-text">
-              AI-Powered FMCG Replenishment & Dynamic Fleet Dispatch
-            </span>
-            <ChevronRight size={13} className="announcement-arrow" />
-          </div>
+      <section id="hero" className="flowgrid-hero">
+        <div className="flowgrid-container">
+          <div className="flowgrid-hero-grid">
+            {/* Left: Copy & CTAs */}
+            <div className="flowgrid-hero-content fg-animate slide-up">
+              <div className="flowgrid-announcement-pill fg-stagger">
+                <Sparkles size={14} className="announcement-sparkle fade-in" />
+                <span className="announcement-text fade-in">
+                  AI-Powered FMCG Replenishment &amp; Dynamic Fleet Dispatch
+                </span>
+                <ChevronRight size={13} className="announcement-arrow fade-in" />
+              </div>
 
-          {/* Hero Main Heading */}
-          <h1 className="flowgrid-hero-headline">
-            Autonomous Distribution &amp;
-            <span className="gradient-text-accent"> Inventory Optimization</span> Engine
-          </h1>
+              <h1 className="flowgrid-hero-headline fade-in">
+                Autonomous Distribution &amp;
+                <span className="gradient-text-accent"> Inventory Optimization</span> Engine
+              </h1>
 
-          {/* Hero Subtitle */}
-          <p className="flowgrid-hero-description">
-            Forecast Kirana-level demand, eliminate depot stockouts, and orchestrate
-            constraint-aware multi-depot replenishment with sub-second Google OR-Tools CP-SAT
-            mathematical optimization.
-          </p>
+              <p className="flowgrid-hero-description fade-in">
+                Forecast Kirana-level demand, eliminate depot stockouts, and orchestrate
+                constraint-aware multi-depot replenishment with sub-second Google OR-Tools CP-SAT
+                mathematical optimization.
+              </p>
 
-          {/* Hero Action Buttons */}
-          <div className="flowgrid-hero-actions">
-            <a href="/dashboard" className="flowgrid-btn-hero-primary">
-              <Sparkles size={18} />
-              <span>Open Planning Console</span>
-              <ArrowRight size={18} />
-            </a>
-            <a href="/dashboard" className="flowgrid-btn-hero-secondary">
-              <Truck size={17} />
-              <span>Explore Fleet Dispatch</span>
-            </a>
-          </div>
+              <div className="flowgrid-hero-actions fg-stagger">
+                <a href="/dashboard" className="flowgrid-btn-hero-primary fade-in">
+                  <Sparkles size={18} />
+                  <span>Open Planning Console</span>
+                  <ArrowRight size={18} />
+                </a>
+                <a href="/dashboard" className="flowgrid-btn-hero-secondary fade-in">
+                  <Truck size={17} />
+                  <span>Explore Fleet Dispatch</span>
+                </a>
+              </div>
 
-          {/* Trust Metrics Bar */}
-          <div className="flowgrid-metrics-strip" aria-label="Operational scale metrics">
-            <div className="metric-item">
-              <span className="metric-val">{SYNTHETIC_SALES_PANEL.warehouseCount}</span>
-              <span className="metric-lbl">Regional Hubs (Pune / Chakan)</span>
+              {/* Trust Metrics Strip */}
+              <div className="flowgrid-trust-strip fg-stagger" aria-label="Operational scale metrics">
+                <div className="metric-item fade-in">
+                  <span className="metric-val">{SYNTHETIC_SALES_PANEL.warehouseCount}</span>
+                  <span className="metric-lbl">Regional Hubs</span>
+                </div>
+                <div className="metric-divider" />
+                <div className="metric-item fade-in">
+                  <span className="metric-val">{SYNTHETIC_SALES_PANEL.storeCount}</span>
+                  <span className="metric-lbl">Kirana Stores</span>
+                </div>
+                <div className="metric-divider" />
+                <div className="metric-item fade-in">
+                  <span className="metric-val">{SYNTHETIC_SALES_PANEL.skuCount}</span>
+                  <span className="metric-lbl">FMCG SKUs</span>
+                </div>
+                <div className="metric-divider" />
+                <div className="metric-item fade-in">
+                  <span className="metric-val">100%</span>
+                  <span className="metric-lbl">Hard Constraints Met</span>
+                </div>
+                <div className="metric-divider" />
+                <div className="metric-item highlight-metric fade-in">
+                  <span className="metric-val">0.29s</span>
+                  <span className="metric-lbl">Avg Solver Time</span>
+                </div>
+              </div>
             </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <span className="metric-val">{SYNTHETIC_SALES_PANEL.storeCount}</span>
-              <span className="metric-lbl">Retail Kirana Stores</span>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <span className="metric-val">{SYNTHETIC_SALES_PANEL.skuCount}</span>
-              <span className="metric-lbl">Flipkart FMCG SKUs</span>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item">
-              <span className="metric-val">100%</span>
-              <span className="metric-lbl">Hard Constraints Met</span>
-            </div>
-            <div className="metric-divider" />
-            <div className="metric-item highlight-metric">
-              <span className="metric-val">0.29s</span>
-              <span className="metric-lbl">Average Solver Wall Time</span>
+
+            {/* Right: 3D Interactive Earth (Originkit TerraDusk) */}
+            <div className="flowgrid-hero-visual fg-animate slide-left">
+              <div className="hero-earth-card">
+                <TerraDusk
+                  size={420}
+                  speed={7}
+                  sun="cursor"
+                  daylight={86}
+                  sunAngle={175}
+                  stars={6}
+                  hover={7.2}
+                  look={{
+                    clouds: 5,
+                    lights: 6,
+                    atmosphere: '#4F9BFF',
+                  }}
+                  background="transparent"
+                  style={{ width: '100%', height: '100%' }}
+                />
+                <div className="hero-earth-overlay">
+                  <div className="hero-earth-label">
+                    <span className="kicker">Maharashtra Supply Grid</span>
+                    <span className="hero-earth-sub">Live allocation feed &middot; Pune Hub 18.5204&deg; N, 73.8567&deg; E</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
       {/* ---------------------------------------------------------------------- */}
-      {/* 3. INTERACTIVE PRODUCT SHOWCASE CONSOLE (REPLACES AWKWARD GLOBE)       */}
+      {/* 3. INTERACTIVE CONSOLE SHOWCASE                                        */}
       {/* ---------------------------------------------------------------------- */}
       <section id="console-preview" className="flowgrid-preview-section">
         <div className="flowgrid-container">
+          <div className="flowgrid-section-header">
+            <span className="section-pill">
+              <Cpu size={13} /> Platform Console
+            </span>
+            <h2 className="section-title">Interactive Planner, Forecaster &amp; Dispatcher</h2>
+            <p className="section-description">
+              Click through the allocation plan, 7-day quantile forecast, and Maharashtra fleet
+              dispatch views that power the console.
+            </p>
+          </div>
+
           <div className="console-wrapper">
             {/* Window Top Controls */}
             <div className="console-window-header">
@@ -250,12 +292,12 @@ export const LandingPage: React.FC = () => {
                       </div>
                       <div>
                         <span className="stat-label">Modelled Freight Cost</span>
-                        <span className="stat-number">₹{samplePlan.totalFreightRupees.toLocaleString()}</span>
+                        <span className="stat-number">&#8377;{samplePlan.totalFreightRupees.toLocaleString()}</span>
                       </div>
                       <div>
                         <span className="stat-label">Expected Net Margin</span>
                         <span className="stat-number text-emerald-400">
-                          ₹{(samplePlan.expectedMarginRupees ?? 49958).toLocaleString()}
+                          &#8377;{(samplePlan.expectedMarginRupees ?? 49958).toLocaleString()}
                         </span>
                       </div>
                     </div>
@@ -280,15 +322,15 @@ export const LandingPage: React.FC = () => {
                       </thead>
                       <tbody>
                         {samplePlan.lines.slice(0, 4).map((line, idx) => {
-                          const prod = INITIAL_PRODUCTS.find(p => p.sku === line.sku);
-                          const wh = INITIAL_WAREHOUSES.find(w => w.id === line.warehouseId);
-                          const ret = INITIAL_RETAILERS.find(r => r.id === line.retailerId);
+                          const prod = INITIAL_PRODUCTS.find((p) => p.sku === line.sku);
+                          const wh = INITIAL_WAREHOUSES.find((w) => w.id === line.warehouseId);
+                          const ret = INITIAL_RETAILERS.find((r) => r.id === line.retailerId);
                           return (
                             <tr key={line.id || idx}>
                               <td>
                                 <div className="product-cell">
                                   <strong>{prod?.name || line.sku}</strong>
-                                  <small>{line.sku} · {prod?.category || 'FMCG'}</small>
+                                  <small>{line.sku} &middot; {prod?.category || 'FMCG'}</small>
                                 </div>
                               </td>
                               <td>
@@ -340,14 +382,14 @@ export const LandingPage: React.FC = () => {
                 <div className="preview-tab-content animate-fade-in">
                   <div className="forecast-showcase-grid">
                     {INITIAL_FORECASTS.slice(0, 3).map((f, i) => {
-                      const prod = INITIAL_PRODUCTS.find(p => p.sku === f.sku);
-                      const ret = INITIAL_RETAILERS.find(r => r.id === f.retailerId);
+                      const prod = INITIAL_PRODUCTS.find((p) => p.sku === f.sku);
+                      const ret = INITIAL_RETAILERS.find((r) => r.id === f.retailerId);
                       return (
                         <div key={i} className="forecast-card-preview">
                           <div className="forecast-card-header">
                             <div>
                               <h4>{prod?.name}</h4>
-                              <p>{ret?.name} · {ret?.city}</p>
+                              <p>{ret?.name} &middot; {ret?.city}</p>
                             </div>
                             <span className="quantile-badge">P10 - P95</span>
                           </div>
@@ -379,7 +421,9 @@ export const LandingPage: React.FC = () => {
                           </div>
 
                           <div className="forecast-footer-info">
-                            <span><CheckCircle2 size={13} className="text-emerald-400" /> Relative WAPE: 17.8%</span>
+                            <span>
+                              <CheckCircle2 size={13} className="text-emerald-400" /> Relative WAPE: 17.8%
+                            </span>
                             <span>Historical Avg: {Math.round(f.q50 * 0.95)} u</span>
                           </div>
                         </div>
@@ -421,7 +465,7 @@ export const LandingPage: React.FC = () => {
                       <div className="vehicle-item">
                         <div className="vehicle-meta">
                           <strong>VEH-01 (Tata 407 Heavy Van)</strong>
-                          <span>Assigned Route: Pune Central → Hadapsar Cluster</span>
+                          <span>Assigned Route: Pune Central &rarr; Hadapsar Cluster</span>
                         </div>
                         <div className="payload-meter">
                           <small>Weight Capacity (1,850 kg / 2,000 kg)</small>
@@ -434,7 +478,7 @@ export const LandingPage: React.FC = () => {
                       <div className="vehicle-item">
                         <div className="vehicle-meta">
                           <strong>VEH-04 (Mahindra Bolero Maxi)</strong>
-                          <span>Assigned Route: Chakan Depot → Pimpri Retail Hub</span>
+                          <span>Assigned Route: Chakan Depot &rarr; Pimpri Retail Hub</span>
                         </div>
                         <div className="payload-meter">
                           <small>Weight Capacity (1,120 kg / 1,500 kg)</small>
@@ -607,7 +651,7 @@ export const LandingPage: React.FC = () => {
                   <CheckCircle2 size={15} />
                   <span>Verified Optimal Recommendation</span>
                 </div>
-                <span className="spotlight-meta">Cycle: Oct 25, 2026 · Planning Horizon 7 Days</span>
+                <span className="spotlight-meta">Cycle: Oct 25, 2026 &middot; Planning Horizon 7 Days</span>
               </div>
 
               <div className="spotlight-main-grid">
@@ -621,14 +665,14 @@ export const LandingPage: React.FC = () => {
                   </div>
                   <div className="spotlight-volume-block">
                     <span className="volume-number">{sampleLine.units.toLocaleString()} Units</span>
-                    <span className="volume-sub">({sampleLine.cases} Cases · Lot: {sampleLine.batchNo})</span>
+                    <span className="volume-sub">({sampleLine.cases} Cases &middot; Lot: {sampleLine.batchNo})</span>
                   </div>
                 </div>
 
                 <div className="spotlight-metrics-panel">
                   <div className="metric-box">
                     <small>7-Day Demand Range</small>
-                    <strong>Q50 {sampleForecast.q50} <span className="text-slate-400">· Q95 {sampleForecast.q95}</span></strong>
+                    <strong>Q50 {sampleForecast.q50} <span className="text-slate-400">&middot; Q95 {sampleForecast.q95}</span></strong>
                   </div>
                   <div className="metric-box">
                     <small>Usable Stock Available</small>
@@ -636,7 +680,7 @@ export const LandingPage: React.FC = () => {
                   </div>
                   <div className="metric-box">
                     <small>Modelled Freight &amp; Transit</small>
-                    <strong>₹{sampleLine.freightRupees.toLocaleString()} <span className="text-slate-400">· {sampleRoute?.transitDays ?? 0.5} days</span></strong>
+                    <strong>&#8377;{sampleLine.freightRupees.toLocaleString()} <span className="text-slate-400">&middot; {sampleRoute?.transitDays ?? 0.5} days</span></strong>
                   </div>
                   <div className="metric-box">
                     <small>Shelf Life on Arrival</small>
@@ -650,12 +694,12 @@ export const LandingPage: React.FC = () => {
                 <div className="spotlight-comparison-row">
                   <div className="comparison-card selected-option">
                     <span className="option-label">SELECTED ROUTE (BEST OBJECTIVE)</span>
-                    <p className="option-name">{sampleWarehouse.city} → {sampleRetailer.city}</p>
+                    <p className="option-name">{sampleWarehouse.city} &rarr; {sampleRetailer.city}</p>
                     <div className="option-details">
-                      <span>₹{sampleLine.freightRupees.toLocaleString()} Freight</span>
-                      <span>·</span>
+                      <span>&#8377;{sampleLine.freightRupees.toLocaleString()} Freight</span>
+                      <span>&middot;</span>
                       <span>{sampleRoute.transitDays} Day Transit</span>
-                      <span>·</span>
+                      <span>&middot;</span>
                       <span className="text-emerald-400">FEFO Expiry Passed</span>
                     </div>
                   </div>
@@ -666,8 +710,8 @@ export const LandingPage: React.FC = () => {
                     <span className="option-label">REJECTED ALTERNATIVE</span>
                     <p className="option-name">{sampleLine.explanation.alternativeWarehouseCompared.warehouseName}</p>
                     <div className="option-details">
-                      <span>+₹{sampleLine.explanation.alternativeWarehouseCompared.freightDifferenceRupees} Higher Freight</span>
-                      <span>·</span>
+                      <span>+&#8377;{sampleLine.explanation.alternativeWarehouseCompared.freightDifferenceRupees} Higher Freight</span>
+                      <span>&middot;</span>
                       <span>+{sampleLine.explanation.alternativeWarehouseCompared.transitDaysDifference} Days Slower</span>
                     </div>
                     <small className="rejected-reason">
@@ -749,7 +793,7 @@ export const LandingPage: React.FC = () => {
               <span className="bench-score text-purple-400">0.29s</span>
               <h4 className="bench-title">Sub-Second Solver Wall Time</h4>
               <p className="bench-text">
-                Full network allocation across 3 depots, 30 stores, and 100 SKUs solved in 0.29 seconds (PRD requirement: $\le 10$ seconds).
+                Full network allocation across 3 depots, 30 stores, and 100 SKUs solved in 0.29 seconds (PRD requirement: &le; 10 seconds).
               </p>
               <div className="bench-status">
                 <CheckCircle2 size={14} className="text-purple-400" />
@@ -789,7 +833,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* ---------------------------------------------------------------------- */}
-      {/* 8. STANDARD PROFESSIONAL MULTI-COLUMN FOOTER                          */}
+      {/* 8. STANDARD PROFESSIONAL MULTI-COLUMN FOOTER                           */}
       {/* ---------------------------------------------------------------------- */}
       <footer className="flowgrid-footer">
         <div className="flowgrid-container">
@@ -858,10 +902,12 @@ export const LandingPage: React.FC = () => {
             </p>
             <div className="footer-bottom-links">
               <span>Maharashtra FMCG Corridor</span>
-              <span className="dot-sep">•</span>
+              <span className="dot-sep">&middot;</span>
               <span>Pune Central Logistics Hub</span>
-              <span className="dot-sep">•</span>
-              <a href="/dashboard" className="text-indigo-400 hover:text-indigo-300">Open Workspace →</a>
+              <span className="dot-sep">&middot;</span>
+              <a href="/dashboard" className="text-indigo-400 hover:text-indigo-300">
+                Open Workspace &rarr;
+              </a>
             </div>
           </div>
         </div>

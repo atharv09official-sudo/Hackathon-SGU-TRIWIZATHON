@@ -22,11 +22,13 @@ import {
   ShieldCheck,
   UserCheck,
   Truck,
-  RotateCcw
+  RotateCcw,
+  Bell,
+  MessageSquare
 } from 'lucide-react';
 import { UserRole } from '../types';
 
-export type ActiveTab = 'plans' | 'forecast' | 'map' | 'benchmark' | 'warehouse' | 'retailer' | 'dispatch' | 'import' | 'health';
+export type ActiveTab = 'plans' | 'forecast' | 'map' | 'benchmark' | 'warehouse' | 'retailer' | 'dispatch' | 'import' | 'health' | 'notifications';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -102,6 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               { id: 'plans' as ActiveTab, label: 'Inbound Store Orders', icon: Boxes, badge: 'Inbound' },
               { id: 'forecast' as ActiveTab, label: 'Store Demand AI', icon: TrendingUp, badge: 'Local ML' },
               { id: 'dispatch' as ActiveTab, label: 'Incoming Delivery Tracker', icon: Truck, badge: 'Kolhapur' },
+              { id: 'notifications' as ActiveTab, label: 'Store SMS Alerts', icon: Bell, badge: 'Twilio' },
             ],
           },
         ];
@@ -114,6 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               { id: 'dispatch' as ActiveTab, label: 'Pune Fleet Dispatch', icon: Truck, badge: 'Native AI' },
               { id: 'plans' as ActiveTab, label: 'Pune Outbound Plan', icon: Cpu, badge: 'Outbound' },
               { id: 'forecast' as ActiveTab, label: 'Downstream Demand Intake', icon: TrendingUp, badge: 'Pune Hub' },
+              { id: 'notifications' as ActiveTab, label: 'Warehouse SMS Alerts', icon: Bell, badge: 'Twilio' },
             ],
           },
         ];
@@ -123,6 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             label: 'GOVERNANCE & SYSTEM INTEGRITY',
             items: [
               { id: 'health' as ActiveTab, label: 'System Health & Alerts', icon: Activity, badge: 'API Mon' },
+              { id: 'notifications' as ActiveTab, label: 'Twilio SMS & Alert Center', icon: Bell, badge: 'Gateway' },
               { id: 'import' as ActiveTab, label: 'Data Import Studio', icon: UploadCloud, badge: '5% Rule' },
               { id: 'plans' as ActiveTab, label: 'Allocation Audit Matrix', icon: Cpu, badge: 'Audit' },
             ],
@@ -149,9 +154,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             ],
           },
           {
-            label: 'SUPPLY CHAIN EXECUTION',
+            label: 'SUPPLY CHAIN EXECUTION & NOTIFICATIONS',
             items: [
               { id: 'dispatch' as ActiveTab, label: 'Smart Delivery Agent', icon: Truck, badge: 'Native AI' },
+              { id: 'notifications' as ActiveTab, label: 'SMS & Incident Alerts Hub', icon: Bell, badge: 'Twilio' },
               { id: 'warehouse' as ActiveTab, label: 'Warehouse Stock Audit', icon: WarehouseIcon, badge: 'Audit FEFO' },
             ],
           },
@@ -447,6 +453,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             {isOnline ? <Wifi className="w-3.5 h-3.5" /> : <WifiOff className="w-3.5 h-3.5" />}
+          </button>
+
+          {/* Quick Bell Notifications button */}
+          <button
+            onClick={() => handleTabClick('notifications')}
+            aria-label="Twilio SMS & Notifications"
+            title="Twilio SMS & Notifications Hub"
+            className={`p-1.5 rounded-lg border text-xs relative cursor-pointer ${
+              activeTab === 'notifications'
+                ? 'bg-indigo-600 text-white border-indigo-500'
+                : 'bg-slate-900 text-slate-300 border-slate-800 hover:text-white'
+            }`}
+          >
+            <Bell className="w-3.5 h-3.5" />
+            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           </button>
 
           {/* Persona Avatar with dynamic RoleIcon */}

@@ -148,45 +148,151 @@
 }
 
 /* Light-only workspace surfaces, matched to the warm ivory reference. */
-.theme-day [class*="bg-slate-950"],
-.theme-day [class*="bg-slate-900"] {
+.theme-day [class*="bg-slate-950"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="bg-slate-900"]:not(.preserve-dark):not(.preserve-dark *) {
   background-color: #ffffff !important;
 }
 
-.theme-day [class*="bg-slate-800"],
-.theme-day [class*="bg-slate-700"] {
+.theme-day [class*="bg-slate-800"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="bg-slate-700"]:not(.preserve-dark):not(.preserve-dark *) {
   background-color: #f5f3ed !important;
 }
 
-.theme-day [class*="bg-indigo-950"] { background-color: #eef2ff !important; }
-.theme-day [class*="bg-purple-950"] { background-color: #f5f3ff !important; }
-.theme-day [class*="bg-emerald-950"] { background-color: #ecfdf5 !important; }
-.theme-day [class*="bg-amber-950"] { background-color: #fffbeb !important; }
-.theme-day [class*="bg-rose-950"],
-.theme-day [class*="bg-red-950"] { background-color: #fff1f2 !important; }
+.theme-day [class*="bg-indigo-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #eef2ff !important; }
+.theme-day [class*="bg-purple-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #f5f3ff !important; }
+.theme-day [class*="bg-emerald-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #ecfdf5 !important; }
+.theme-day [class*="bg-amber-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #fffbeb !important; }
+.theme-day [class*="bg-rose-950"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="bg-red-950"]:not(.preserve-dark):not(.preserve-dark *) { background-color: #fff1f2 !important; }
 
-.theme-day [class~="text-white"],
-.theme-day [class~="text-slate-100"] { color: #16243a !important; }
-.theme-day [class~="text-slate-200"] { color: #26364e !important; }
-.theme-day [class~="text-slate-300"] { color: #475569 !important; }
-.theme-day [class~="text-slate-400"] { color: #64748b !important; }
-.theme-day [class~="text-indigo-100"] { color: #3730a3 !important; }
-.theme-day [class~="text-indigo-200"] { color: #4338ca !important; }
-.theme-day [class*="text-indigo-300"] { color: #4f46e5 !important; }
-.theme-day [class*="text-emerald-300"] { color: #047857 !important; }
-.theme-day [class*="text-amber-300"] { color: #b45309 !important; }
-.theme-day [class*="text-purple-300"] { color: #6d28d9 !important; }
-.theme-day [class*="text-cyan-300"] { color: #0e7490 !important; }
+/* Preserved dark containers (such as phone simulator, dark terminals, command banners) */
+.theme-day .preserve-dark,
+.theme-day [class*="preserve-dark"] {
+  background-color: #0b1329 !important;
+  border-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+.theme-day .preserve-dark [class*="bg-slate-950"] { background-color: #020617 !important; }
+.theme-day .preserve-dark [class*="bg-slate-900"] { background-color: #0f172a !important; }
+.theme-day .preserve-dark [class*="bg-slate-800"] { background-color: #1e293b !important; }
+.theme-day .preserve-dark [class*="bg-slate-700"] { background-color: #334155 !important; }
+.theme-day .preserve-dark [class*="border-slate-800"],
+.theme-day .preserve-dark [class*="border-slate-700"] { border-color: #334155 !important; }
+.theme-day .preserve-dark [class~="text-white"],
+.theme-day .preserve-dark [class~="text-slate-100"] { color: #ffffff !important; }
+.theme-day .preserve-dark [class~="text-slate-300"] { color: #cbd5e1 !important; }
+.theme-day .preserve-dark [class~="text-slate-400"] { color: #94a3b8 !important; }
+.theme-day .preserve-dark [class~="text-slate-500"] { color: #64748b !important; }
 
+/* Day mode text colors on regular light panels */
+.theme-day [class~="text-white"]:not(.btn-navy):not(.btn-navy *):not([class*="bg-indigo-6"]):not([class*="bg-indigo-5"]):not([class*="bg-indigo-7"]):not([class*="bg-emerald-6"]):not([class*="bg-emerald-7"]):not([class*="bg-emerald-5"]):not([class*="bg-rose-6"]):not([class*="bg-rose-7"]):not([class*="bg-red-6"]):not([class*="bg-amber-6"]):not([class*="bg-purple-6"]):not([class*="bg-purple-7"]):not([class*="bg-sky-6"]):not([class*="bg-blue-6"]):not([class*="bg-[#0a192f]"]):not([class*="bg-indigo-6"] *):not([class*="bg-indigo-5"] *):not([class*="bg-indigo-7"] *):not([class*="bg-emerald-6"] *):not([class*="bg-emerald-7"] *):not([class*="bg-emerald-5"] *):not([class*="bg-rose-6"] *):not([class*="bg-rose-7"] *):not([class*="bg-red-6"] *):not([class*="bg-amber-6"] *):not([class*="bg-purple-6"] *):not([class*="bg-purple-7"] *):not([class*="bg-sky-6"] *):not([class*="bg-blue-6"] *):not([class*="bg-[#0a192f]"] *):not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class~="text-slate-100"]:not(.btn-navy):not(.btn-navy *):not([class*="bg-indigo-"]):not([class*="bg-emerald-"]):not([class*="bg-rose-"]):not([class*="bg-purple-"]):not([class*="bg-[#0a192f]"]):not(.preserve-dark):not(.preserve-dark *) {
+  color: #16243a !important;
+}
+
+.theme-day [class~="text-slate-200"]:not(.preserve-dark *) { color: #26364e !important; }
+.theme-day [class~="text-slate-300"]:not(.preserve-dark *) { color: #475569 !important; }
+.theme-day [class~="text-slate-400"]:not(.preserve-dark *) { color: #64748b !important; }
+.theme-day [class~="text-indigo-100"]:not(.preserve-dark *) { color: #3730a3 !important; }
+.theme-day [class~="text-indigo-200"]:not([class*="bg-indigo-6"] *):not(.preserve-dark *) { color: #4338ca !important; }
+.theme-day [class*="text-indigo-300"]:not([class*="bg-indigo-6"] *):not(.preserve-dark *) { color: #4f46e5 !important; }
+.theme-day [class*="text-indigo-400"]:not([class*="bg-indigo-6"] *):not(.preserve-dark *) { color: #4338ca !important; }
+
+/* High-contrast WCAG AA accessible colors for Day Mode text on white/cream backgrounds */
+.theme-day [class*="text-emerald-300"]:not([class*="bg-emerald-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-emerald-400"]:not([class*="bg-emerald-6"] *):not(.preserve-dark *) { color: #047857 !important; }
+
+.theme-day [class*="text-amber-300"]:not([class*="bg-amber-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-amber-400"]:not([class*="bg-amber-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-amber-200"]:not([class*="bg-amber-6"] *):not(.preserve-dark *) { color: #b45309 !important; }
+
+.theme-day [class*="text-rose-300"]:not([class*="bg-rose-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-rose-400"]:not([class*="bg-rose-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-red-400"]:not([class*="bg-rose-6"] *):not(.preserve-dark *) { color: #be123c !important; }
+
+.theme-day [class*="text-purple-300"]:not([class*="bg-purple-6"] *):not(.preserve-dark *),
+.theme-day [class*="text-purple-400"]:not([class*="bg-purple-6"] *):not(.preserve-dark *) { color: #6d28d9 !important; }
+
+.theme-day [class*="text-cyan-300"]:not(.preserve-dark *),
+.theme-day [class*="text-cyan-400"]:not(.preserve-dark *),
+.theme-day [class*="text-sky-400"]:not(.preserve-dark *) { color: #0e7490 !important; }
+
+/* Guaranteed crisp white text and icons on buttons and solid-colored elements in Day mode */
 .theme-day button[class~="text-white"],
-.theme-day a[class~="text-white"] { color: #ffffff !important; }
-.theme-day button[class*="bg-indigo-"] [class~="text-white"],
-.theme-day button[class*="bg-emerald-"] [class~="text-white"],
-.theme-day button[class*="bg-amber-"] [class~="text-white"] { color: #ffffff !important; }
+.theme-day a[class~="text-white"],
+.theme-day [class*="bg-indigo-6"] [class~="text-white"],
+.theme-day [class*="bg-indigo-5"] [class~="text-white"],
+.theme-day [class*="bg-indigo-7"] [class~="text-white"],
+.theme-day [class*="bg-emerald-6"] [class~="text-white"],
+.theme-day [class*="bg-emerald-7"] [class~="text-white"],
+.theme-day [class*="bg-emerald-5"] [class~="text-white"],
+.theme-day [class*="bg-rose-6"] [class~="text-white"],
+.theme-day [class*="bg-rose-7"] [class~="text-white"],
+.theme-day [class*="bg-red-6"] [class~="text-white"],
+.theme-day [class*="bg-amber-6"] [class~="text-white"],
+.theme-day [class*="bg-purple-6"] [class~="text-white"],
+.theme-day [class*="bg-purple-7"] [class~="text-white"],
+.theme-day [class*="bg-sky-6"] [class~="text-white"],
+.theme-day [class*="bg-blue-6"] [class~="text-white"],
+.theme-day [class*="bg-[#0a192f]"] [class~="text-white"],
+.theme-day .btn-navy [class~="text-white"],
+.theme-day [class*="bg-indigo-6"] [class~="text-slate-100"],
+.theme-day [class*="bg-emerald-6"] [class~="text-slate-100"],
+.theme-day [class*="bg-rose-6"] [class~="text-slate-100"],
+.theme-day [class*="bg-[#0a192f]"] [class~="text-slate-100"],
+.theme-day .btn-navy [class~="text-slate-100"],
+.theme-day [class*="bg-indigo-6"] > span,
+.theme-day [class*="bg-emerald-6"] > span,
+.theme-day [class*="bg-rose-6"] > span,
+.theme-day [class*="bg-[#0a192f]"] > span,
+.theme-day .btn-navy > span {
+  color: #ffffff !important;
+}
 
-.theme-day [class*="border-slate-900"],
-.theme-day [class*="border-slate-800"],
-.theme-day [class*="border-slate-700"] { border-color: #e7e4dc !important; }
+/* Subtle & ghost buttons in Day mode: prevent hover:text-white from washing out */
+.theme-day button[class*="hover:text-white"]:not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-amber"]):not(.btn-navy):not(.preserve-dark):hover,
+.theme-day button.hover\:text-white:not([class*="bg-indigo"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-amber"]):not(.btn-navy):not(.preserve-dark):hover {
+  color: #0a192f !important;
+  background-color: #ede8dc !important;
+}
+
+/* Sidebar nav item hover in Day mode */
+.theme-day aside button:not(.btn-navy):not([class*="bg-indigo-600"]):hover {
+  background-color: #f1ece1 !important;
+  color: #0a192f !important;
+}
+.theme-day aside button:not(.btn-navy):not([class*="bg-indigo-600"]):hover svg {
+  color: #4f46e5 !important;
+}
+
+/* Table rows and header cells in Day mode */
+.theme-day table tr:hover:not(.preserve-dark *) {
+  background-color: #f8f6f0 !important;
+}
+.theme-day table th:not(.preserve-dark *) {
+  color: #475569 !important;
+  background-color: #faf8f2 !important;
+  border-color: #e7e4dc !important;
+}
+.theme-day table td:not(.preserve-dark *) {
+  border-color: #ede9e0 !important;
+}
+
+/* Borders in Day mode */
+.theme-day [class*="border-slate-900"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="border-slate-800"]:not(.preserve-dark):not(.preserve-dark *),
+.theme-day [class*="border-slate-700"]:not(.preserve-dark):not(.preserve-dark *) {
+  border-color: #e7e4dc !important;
+}
+
+/* Input focus ring and border in Day mode */
+.theme-day input:focus,
+.theme-day select:focus,
+.theme-day textarea:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+  outline: none !important;
+}
 
 .theme-day aside,
 .theme-day header,

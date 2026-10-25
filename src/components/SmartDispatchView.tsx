@@ -26,7 +26,10 @@ import {
   X,
   User,
   Info,
-  Check
+  Check,
+  Bell,
+  Camera,
+  Upload
 } from 'lucide-react';
 import {
   ClientDeliveryOrder,
@@ -47,11 +50,39 @@ import {
 interface SmartDispatchViewProps {
   theme: ThemeMode;
   userRole?: UserRole;
+  onNavigateTab?: (tab: any) => void;
 }
+
+type EvidenceKey = 'lanePhoto' | 'geoTag' | 'receiverOtp' | 'shelfPhoto' | 'signedPod';
+type OrderEvidenceState = Record<EvidenceKey, boolean>;
+type UpdateKey = 'clientOps' | 'retailerOwner' | 'etaBroadcast' | 'proofShared';
+type OrderUpdateState = Record<UpdateKey, boolean>;
+
+const getDefaultEvidenceState = (order: ClientDeliveryOrder): OrderEvidenceState => ({
+  lanePhoto: order.addressClassification === 'NARROW_LANE',
+  geoTag: order.status !== 'ASSIGNED',
+  receiverOtp: false,
+  shelfPhoto: false,
+  signedPod: order.status === 'DELIVERED'
+});
+
+const getDefaultUpdateState = (order: ClientDeliveryOrder): OrderUpdateState => ({
+  clientOps: order.status !== 'ASSIGNED',
+  retailerOwner: order.nativeMatchScore >= 95,
+  etaBroadcast: order.nativeMatchScore >= 95,
+  proofShared: order.status === 'DELIVERED'
+});
+
+const buildInitialEvidenceState = (): Record<string, OrderEvidenceState> =>
+  Object.fromEntries(INITIAL_CLIENT_DELIVERY_ORDERS.map((order) => [order.id, getDefaultEvidenceState(order)]));
+
+const buildInitialUpdateState = (): Record<string, OrderUpdateState> =>
+  Object.fromEntries(INITIAL_CLIENT_DELIVERY_ORDERS.map((order) => [order.id, getDefaultUpdateState(order)]));
 
 export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
   theme,
-  userRole = 'rohit'
+  userRole = 'rohit',
+  onNavigateTab
 }) => {
   const [orders, setOrders] = useState<ClientDeliveryOrder[]>(INITIAL_CLIENT_DELIVERY_ORDERS);
   const [drivers, setDrivers] = useState<NativeDriver[]>(INITIAL_NATIVE_DRIVERS);
@@ -61,6 +92,8 @@ export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
   const [simulationStep, setSimulationStep] = useState<string>('');
   const [selectedChalanOrder, setSelectedChalanOrder] = useState<ClientDeliveryOrder | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [orderEvidenceStatus, setOrderEvidenceStatus] = useState<Record<string, OrderEvidenceState>>(buildInitialEvidenceState);
+  const [orderUpdateStatus, setOrderUpdateStatus] = useState<Record<string, OrderUpdateState>>(buildInitialUpdateState);
 
   // Assignment setting option: Currently manual by default, with auto-suggested profile routes option
   const [assignmentSettings, setAssignmentSettings] = useState<AssignmentSettings>({
@@ -204,14 +237,38 @@ export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
   const handleReset = () => {
     setOrders(INITIAL_CLIENT_DELIVERY_ORDERS);
     setDrivers(INITIAL_NATIVE_DRIVERS);
+    setOrderEvidenceStatus(buildInitialEvidenceState());
+    setOrderUpdateStatus(buildInitialUpdateState());
     showToast('Simulation state restored to default.');
+  };
+
+  const markEvidenceUploaded = (order: ClientDeliveryOrder, evidenceKey: EvidenceKey, label: string) => {
+    setOrderEvidenceStatus((prev) => ({
+      ...prev,
+      [order.id]: {
+        ...(prev[order.id] ?? getDefaultEvidenceState(order)),
+        [evidenceKey]: true
+      }
+    }));
+    showToast(`✓ ${label} uploaded for ${order.clientName}. Dispatch evidence is now more accurate.`);
+  };
+
+  const sendStakeholderUpdate = (order: ClientDeliveryOrder, updateKey: UpdateKey, label: string) => {
+    setOrderUpdateStatus((prev) => ({
+      ...prev,
+      [order.id]: {
+        ...(prev[order.id] ?? getDefaultUpdateState(order)),
+        [updateKey]: true
+      }
+    }));
+    showToast(`✓ ${label} sent for ${order.clientName}.`);
   };
 
   return (
     <div className={`space-y-6 transition-colors duration-300 ${isDay ? 'theme-day' : 'theme-night'}`}>
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 animate-bounce max-w-md p-4 rounded-2xl bg-[#0a192f] text-white border border-cyan-400/40 shadow-2xl flex items-center gap-3">
+        <div className="preserve-dark fixed bottom-6 right-6 z-50 animate-bounce max-w-md p-4 rounded-2xl bg-[#0a192f] text-white border border-cyan-400/40 shadow-2xl flex items-center gap-3">
           <Sparkles className="w-5 h-5 text-cyan-400 shrink-0" />
           <span className="text-xs font-semibold leading-relaxed">{toastMessage}</span>
         </div>
@@ -312,6 +369,22 @@ export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
             >
               <RotateCcw className="w-4 h-4" />
             </button>
+
+            {onNavigateTab && (
+              <button
+                type="button"
+                onClick={() => onNavigateTab('notifications')}
+                className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                  isDay
+                    ? 'bg-indigo-50 border-indigo-200 text-indigo-700 hover:bg-indigo-100'
+                    : 'bg-indigo-950/40 border-indigo-500/30 text-indigo-300 hover:bg-indigo-900/50'
+                }`}
+                title="Manage Twilio SMS alerts and event notification triggers"
+              >
+                <Bell className="w-3.5 h-3.5 text-indigo-400" />
+                <span>SMS Alerts Hub</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -560,6 +633,66 @@ export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
             const assignedDriver = drivers.find((d) => d.id === order.assignedDriverId);
             const isSimulatingThis = simulatingTripId === order.id;
             const suggestedMatch = getSuggestedDriverForOrder(order);
+            const evidenceState = orderEvidenceStatus[order.id] ?? getDefaultEvidenceState(order);
+            const updateState = orderUpdateStatus[order.id] ?? getDefaultUpdateState(order);
+            const evidenceChecklist = [
+              {
+                key: 'lanePhoto' as const,
+                title: 'Lane Evidence',
+                detail: `Street-width proof for ${order.laneWidthMeters}m clearance`,
+                icon: Camera
+              },
+              {
+                key: 'geoTag' as const,
+                title: 'Geo Arrival Stamp',
+                detail: `Pinned near ${order.localLandmark}`,
+                icon: MapPin
+              },
+              {
+                key: 'receiverOtp' as const,
+                title: 'Receiver OTP',
+                detail: 'Retailer validation before unload',
+                icon: ShieldCheck
+              },
+              {
+                key: 'shelfPhoto' as const,
+                title: 'Shelf / Drop Photo',
+                detail: 'Photo proof of cases placed at store',
+                icon: Camera
+              },
+              {
+                key: 'signedPod' as const,
+                title: 'Signed POD',
+                detail: 'Stamped signed chalan from retailer',
+                icon: FileText
+              }
+            ];
+            const communicationTimeline = [
+              {
+                key: 'clientOps' as const,
+                label: 'Client control tower updated',
+                detail: `Hub informed about ${order.city} dispatch feasibility`
+              },
+              {
+                key: 'retailerOwner' as const,
+                label: 'Retailer informed',
+                detail: 'Store owner received driver and vehicle details'
+              },
+              {
+                key: 'etaBroadcast' as const,
+                label: 'ETA sent to end customer',
+                detail: `Arrival window synced for ${order.unloadingWindow}`
+              },
+              {
+                key: 'proofShared' as const,
+                label: 'Proof pack shared back',
+                detail: 'Evidence bundle returned after unloading'
+              }
+            ];
+            const evidenceDone = evidenceChecklist.filter((item) => evidenceState[item.key]).length;
+            const updateDone = communicationTimeline.filter((item) => updateState[item.key]).length;
+            const evidenceScore = Math.round((evidenceDone / evidenceChecklist.length) * 100);
+            const communicationScore = Math.round((updateDone / communicationTimeline.length) * 100);
 
             // Classification badge color
             const classColor =
@@ -989,6 +1122,194 @@ export const SmartDispatchView: React.FC<SmartDispatchViewProps> = ({
                         </p>
                       </div>
                     )}
+                  </div>
+                </div>
+
+                <div className="mt-4 grid grid-cols-1 xl:grid-cols-12 gap-4">
+                  <div
+                    className={`xl:col-span-7 rounded-2xl border p-4 ${
+                      isDay ? 'bg-slate-50/90 border-slate-200' : 'bg-slate-950/40 border-slate-800'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                          Agent Evidence Desk
+                        </div>
+                        <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+                          Upload field proof to improve route accuracy, reduce disputes, and verify last-mile conditions.
+                        </p>
+                      </div>
+                      <div className="min-w-[168px] rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 dark:border-emerald-800/50 dark:bg-emerald-950/20">
+                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
+                          <span>Evidence accuracy</span>
+                          <span>{evidenceScore}%</span>
+                        </div>
+                        <div className="mt-2 h-2 rounded-full bg-emerald-100 dark:bg-slate-800">
+                          <div
+                            className="h-2 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all"
+                            style={{ width: `${evidenceScore}%` }}
+                          />
+                        </div>
+                        <p className="mt-1 text-[10px] text-emerald-800/90 dark:text-emerald-200">
+                          {evidenceDone}/{evidenceChecklist.length} proofs captured
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {evidenceChecklist.map((item) => {
+                        const Icon = item.icon;
+                        const completed = evidenceState[item.key];
+                        return (
+                          <div
+                            key={item.key}
+                            className={`rounded-xl border p-3 text-xs ${
+                              completed
+                                ? isDay
+                                  ? 'bg-emerald-50 border-emerald-200'
+                                  : 'bg-emerald-950/20 border-emerald-800/50'
+                                : isDay
+                                ? 'bg-white border-slate-200'
+                                : 'bg-slate-900/80 border-slate-700'
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-100">
+                                  <Icon className={`w-4 h-4 ${completed ? 'text-emerald-500' : 'text-indigo-500'}`} />
+                                  <span>{item.title}</span>
+                                </div>
+                                <p className="mt-1 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                                  {item.detail}
+                                </p>
+                              </div>
+                              <span
+                                className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                                  completed
+                                    ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                                    : 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
+                                }`}
+                              >
+                                {completed ? 'Verified' : 'Pending'}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => markEvidenceUploaded(order, item.key, item.title)}
+                              className={`mt-3 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-bold cursor-pointer ${
+                                completed
+                                  ? isDay
+                                    ? 'bg-slate-200 text-slate-700'
+                                    : 'bg-slate-800 text-slate-200'
+                                  : isDay
+                                  ? 'btn-navy text-white'
+                                  : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                              }`}
+                            >
+                              {completed ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Upload className="w-3.5 h-3.5" />}
+                              <span>{completed ? 'Re-sync Proof' : 'Upload Proof'}</span>
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div
+                    className={`xl:col-span-5 rounded-2xl border p-4 ${
+                      isDay ? 'bg-[#fcfbf9] border-slate-200' : 'bg-slate-900/50 border-slate-800'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                          <Bell className="w-3.5 h-3.5 text-cyan-500" />
+                          Client & Customer Updates
+                        </div>
+                        <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+                          Use verified evidence to keep client ops and end customers updated in real time.
+                        </p>
+                      </div>
+                      <div className="min-w-[132px] rounded-xl border border-cyan-200 bg-cyan-50/80 px-3 py-2 dark:border-cyan-800/50 dark:bg-cyan-950/20">
+                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300">
+                          <span>Comms coverage</span>
+                          <span>{communicationScore}%</span>
+                        </div>
+                        <div className="mt-2 h-2 rounded-full bg-cyan-100 dark:bg-slate-800">
+                          <div
+                            className="h-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all"
+                            style={{ width: `${communicationScore}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 space-y-3">
+                      {communicationTimeline.map((step) => {
+                        const completed = updateState[step.key];
+                        return (
+                          <div key={step.key} className="flex items-start gap-3">
+                            <div
+                              className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-full border ${
+                                completed
+                                  ? 'border-emerald-500 bg-emerald-500/15 text-emerald-600 dark:text-emerald-300'
+                                  : 'border-slate-300 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-900'
+                              }`}
+                            >
+                              {completed ? <Check className="w-3.5 h-3.5" /> : <Bell className="w-3.5 h-3.5" />}
+                            </div>
+                            <div className="min-w-0 flex-1 rounded-xl border border-slate-200 bg-white/80 p-3 dark:border-slate-800 dark:bg-slate-950/40">
+                              <div className="flex flex-wrap items-center justify-between gap-2">
+                                <div className="font-semibold text-slate-800 dark:text-slate-100">{step.label}</div>
+                                <span
+                                  className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                                    completed
+                                      ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                                      : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+                                  }`}
+                                >
+                                  {completed ? 'Sent' : 'Queued'}
+                                </span>
+                              </div>
+                              <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">{step.detail}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          sendStakeholderUpdate(order, 'clientOps', 'Client control tower update');
+                          sendStakeholderUpdate(order, 'etaBroadcast', 'ETA broadcast to end customer');
+                        }}
+                        className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-[11px] font-bold cursor-pointer ${
+                          isDay ? 'btn-navy text-white' : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                        }`}
+                      >
+                        <Bell className="w-3.5 h-3.5" />
+                        Push ETA Update
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          sendStakeholderUpdate(order, 'retailerOwner', 'Retailer confirmation update');
+                          sendStakeholderUpdate(order, 'proofShared', 'Evidence pack shared to client');
+                        }}
+                        className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-[11px] font-bold cursor-pointer ${
+                          isDay
+                            ? 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-50'
+                            : 'bg-slate-800 border border-slate-700 text-slate-100'
+                        }`}
+                      >
+                        <UserCheck className="w-3.5 h-3.5 text-cyan-500" />
+                        Update Client
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

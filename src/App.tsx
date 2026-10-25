@@ -12,6 +12,7 @@ import { ImportStudioView } from './components/ImportStudioView';
 import { AdminHealthView } from './components/AdminHealthView';
 import { SmartDispatchView } from './components/SmartDispatchView';
 import { MapSection } from './components/map-section/MapSection';
+import { NotificationsView } from './components/NotificationsView';
 import { DemoWalkthroughModal } from './components/DemoWalkthroughModal';
 import { WhatIfSimulatorModal } from './components/WhatIfSimulatorModal';
 import { UserCheck, ShieldCheck, Sparkles, CheckCircle2, ChevronRight, Lock, Store, Warehouse as WarehouseIcon, Cpu, Sliders } from 'lucide-react';
@@ -613,6 +614,7 @@ export const App: React.FC = () => {
             <SmartDispatchView
               theme={theme}
               userRole={userRole}
+              onNavigateTab={(tab) => setActiveTab(tab)}
             />
           )}
 
@@ -626,7 +628,7 @@ export const App: React.FC = () => {
             />
           )}
 
-          {activeTab === 'map' && <MapSection />}
+          {activeTab === 'map' && <MapSection theme={theme} />}
 
           {activeTab === 'benchmark' && (
             <BaselineComparisonView />
@@ -672,6 +674,13 @@ export const App: React.FC = () => {
               queuedEventCount={queuedEvents.filter(e => e.status === 'QUEUED').length}
               userRole={userRole}
               isOnline={isOnline}
+              theme={theme}
+            />
+          )}
+
+          {activeTab === 'notifications' && (
+            <NotificationsView
+              userRole={userRole}
               theme={theme}
             />
           )}

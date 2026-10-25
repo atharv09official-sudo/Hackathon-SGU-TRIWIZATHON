@@ -376,3 +376,78 @@ export interface NativeDriver {
   };
 }
 
+// Twilio SMS & Notification Hub Types (FR-P0-09)
+export interface SmsTokenStats {
+  char_count: number;
+  effective_length: number;
+  encoding: string;
+  segments: number;
+  is_single_segment: boolean;
+  max_single_chars: number;
+  remaining_in_segment: number;
+  token_cost_inr: number;
+  token_efficiency_pct: number;
+}
+
+export interface NotificationRule {
+  id: string;
+  category: 'FUEL' | 'ROAD' | 'AGENT' | 'STOCK';
+  title: string;
+  description: string;
+  source_element: string;
+  trigger_condition: string;
+  is_enabled: boolean;
+  message_content: string;
+  severity: 'critical' | 'warning' | 'info';
+  last_triggered_at?: string | null;
+  token_stats?: SmsTokenStats;
+}
+
+export interface TwilioConfig {
+  account_sid: string;
+  auth_token: string;
+  from_phone: string;
+  recipient_phone: string;
+  is_configured: boolean;
+  is_real_twilio: boolean;
+  masked_token?: string;
+}
+
+export interface SmsDispatchLog {
+  id: string;
+  sid: string;
+  status: 'DELIVERED' | 'SENT' | 'SIMULATED' | 'FAILED';
+  mode: string;
+  recipient: string;
+  sender: string;
+  message_content: string;
+  token_stats: SmsTokenStats;
+  timestamp: string;
+  rule_category: string;
+  notice?: string;
+  error?: string;
+  error_code?: number;
+}
+
+export interface MainframeTriggerDetection {
+  category: string;
+  rule_id: string;
+  is_enabled: boolean;
+  event_name: string;
+  current_value: string;
+  threshold: string;
+  severity: 'critical' | 'warning' | 'info';
+  is_triggered: boolean;
+  source: string;
+  suggested_message: string;
+}
+
+export interface MainframeScanResult {
+  scanned_at: string;
+  total_triggers: number;
+  active_triggers: MainframeTriggerDetection[];
+  enabled_triggers: MainframeTriggerDetection[];
+  dispatched_count?: number;
+  dispatched_alerts?: SmsDispatchLog[];
+}
+

@@ -43,6 +43,12 @@ class Settings(BaseSettings):
     OLLAMA_FALLBACK_MODEL: str = "gemma4:12b"
     OLLAMA_TIMEOUT_SECONDS: float = 30.0
     OLLAMA_ENABLED: bool = True
+
+    # Twilio SMS Gateway Configuration (PRD FR-P0-09)
+    TWILIO_ACCOUNT_SID: Optional[str] = None
+    TWILIO_AUTH_TOKEN: Optional[str] = None
+    TWILIO_PHONE_NUMBER: Optional[str] = None
+    TWILIO_RECIPIENT_PHONE: Optional[str] = None
     
     model_config = SettingsConfigDict(
         env_file=".env",
